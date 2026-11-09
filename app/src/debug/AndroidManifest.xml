@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Debug-only. Allows testing the first-launch data download against a
+        local HTTP server (for example through `adb reverse`). Release builds
+        keep the platform default and only download over HTTPS.
+    -->
+    <application android:usesCleartextTraffic="true" />
+
+</manifest>

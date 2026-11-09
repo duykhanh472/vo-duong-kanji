@@ -9,42 +9,25 @@ data class AssetLocation(
 
 object AppAssets {
 
-    const val AppDataDatabaseVersion = 15
+    const val AppDataDatabaseVersion = 16
     const val AppDataAssetFileName = "kanji-dojo-data-base-v$AppDataDatabaseVersion.sql"
+
+    /**
+     * GitHub Release asset URL of the gzipped app data database.
+     *
+     * The data is no longer bundled into the APK. Set this before publishing a
+     * release, or pass `-PkanjiDataUrl=...` at build time. When empty, the
+     * first launch screen only offers file import.
+     */
+    const val AppDataDownloadUrl = ""
 
     val kanaVoiceOpus = Asset(
         fileName = "ja-JP-Neural2-B.opus",
         url = "https://github.com/syt0r/Kanji-Dojo-Data/releases/download/voice-v1/ja-JP-Neural2-B.opus"
     )
 
-    val kanaVoiceWav = Asset(
-        fileName = "ja-JP-Neural2-B.wav",
-        url = "https://github.com/syt0r/Kanji-Dojo-Data/releases/download/voice-v1/ja-JP-Neural2-B.wav"
-    )
-
-    val CommonAssetsLocation = AssetLocation(
-        expectedAssets = listOf(
-            Asset(
-                fileName = AppDataAssetFileName,
-                url = "https://github.com/syt0r/Kanji-Dojo-Data/releases/download/v15.0/kanji-dojo-data-base-v15.sql"
-            ),
-            Asset(
-                fileName = "text_analysis_preview.json",
-                url = null
-            )
-        )
-    )
-
     val AndroidAssetsLocation = AssetLocation(
         expectedAssets = listOf(kanaVoiceOpus)
-    )
-
-    val DesktopAssetsLocation = AssetLocation(
-        expectedAssets = listOf(kanaVoiceWav)
-    )
-
-    val IosAssetsLocation = AssetLocation(
-        expectedAssets = listOf(kanaVoiceWav)
     )
 
 }

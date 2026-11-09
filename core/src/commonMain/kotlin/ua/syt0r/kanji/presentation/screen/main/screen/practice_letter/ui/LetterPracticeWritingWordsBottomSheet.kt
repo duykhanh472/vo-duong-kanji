@@ -40,7 +40,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import ua.syt0r.kanji.core.app_data.data.JapaneseWord
 import ua.syt0r.kanji.core.logger.Logger
 import ua.syt0r.kanji.presentation.common.JapaneseWordUI
 import ua.syt0r.kanji.presentation.common.Paginateable
@@ -48,7 +47,6 @@ import ua.syt0r.kanji.presentation.common.PaginationLoadLaunchedEffect
 import ua.syt0r.kanji.presentation.common.collectAsState
 import ua.syt0r.kanji.presentation.common.theme.Dimens
 import ua.syt0r.kanji.presentation.common.ui.TinyCircularProgressBar
-import ua.syt0r.kanji.presentation.dialog.SaveWordDialog
 import ua.syt0r.kanji.presentation.screen.main.screen.practice_common.CharacterWriterConfiguration
 import ua.syt0r.kanji.presentation.screen.main.screen.practice_common.CharacterWritingProgress
 import ua.syt0r.kanji.presentation.screen.main.screen.practice_letter.LetterPracticeScreenContract
@@ -131,17 +129,8 @@ fun letterPracticeWritingWordsBottomSheetHeight(
 fun LetterPracticeWritingWordsBottomSheet(
     state: State<BottomSheetStateData>,
     sheetContentHeight: State<Dp>,
-    hideSheet: () -> Unit,
-    onWordClick: (JapaneseWord) -> Unit
+    hideSheet: () -> Unit
 ) {
-
-    var wordToAddToVocabDeck by remember { mutableStateOf<JapaneseWord?>(null) }
-    wordToAddToVocabDeck?.let {
-        SaveWordDialog(
-            word = it,
-            onDismissRequest = { wordToAddToVocabDeck = null }
-        )
-    }
 
     val animatedHeight = animateDpAsState(sheetContentHeight.value)
 
@@ -203,9 +192,7 @@ fun LetterPracticeWritingWordsBottomSheet(
                 WordExample(
                     index = index,
                     example = word,
-                    currentState = currentState,
-                    onWordClick = onWordClick,
-                    onAddButtonClick = { wordToAddToVocabDeck = word.word }
+                    currentState = currentState
                 )
             }
 
@@ -232,9 +219,7 @@ fun LetterPracticeWritingWordsBottomSheet(
 private fun WordExample(
     index: Int,
     example: LetterPracticeExampleWord,
-    currentState: BottomSheetStateData,
-    onWordClick: (JapaneseWord) -> Unit,
-    onAddButtonClick: (JapaneseWord) -> Unit
+    currentState: BottomSheetStateData
 ) {
     JapaneseWordUI(
         index = index,
@@ -245,10 +230,6 @@ private fun WordExample(
                 reveal = currentState.reveal,
                 letter = currentState.letter
             )
-        },
-        onClick = { onWordClick(example.word) }
-            .takeIf { currentState.reveal },
-        addWordToVocabDeckClick = { onAddButtonClick(example.word) }
-            .takeIf { currentState.reveal }
+        }
     )
 }

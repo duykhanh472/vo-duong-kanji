@@ -28,25 +28,13 @@ fun DeckPickerScreen(
         state = viewModel.state.collectAsState(),
         onUpButtonClick = { mainNavigationState.navigateBack() },
         createEmpty = {
-            val deckEditConfiguration = when (configuration) {
-                DeckPickerScreenConfiguration.Letters -> DeckEditScreenConfiguration.LetterDeck.CreateNew
-                DeckPickerScreenConfiguration.Vocab -> DeckEditScreenConfiguration.VocabDeck.CreateNew
-            }
+            val deckEditConfiguration = DeckEditScreenConfiguration.LetterDeck.CreateNew
             val destination = MainDestination.DeckEdit(deckEditConfiguration)
             mainNavigationState.navigate(destination)
         },
         onLetterDeckClick = { classification, title ->
             val destination = MainDestination.DeckEdit(
                 DeckEditScreenConfiguration.LetterDeck.CreateDerived(
-                    title = title,
-                    classification = classification
-                )
-            )
-            mainNavigationState.navigate(destination)
-        },
-        onVocabDeckClick = { classification, title ->
-            val destination = MainDestination.DeckEdit(
-                DeckEditScreenConfiguration.VocabDeck.CreateDerived(
                     title = title,
                     classification = classification
                 )

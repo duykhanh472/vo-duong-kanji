@@ -1,20 +1,14 @@
 <resources>
 
     <string name="study_category_letter">文字</string>
-    <string name="study_category_vocab">単語</string>
     <string name="practice_type_writing">書き取り</string>
     <string name="practice_type_flashcard">フラッシュカード</string>
-    <string name="practice_type_reading_picker">読み取りピッカー</string>
 
     <string name="srs_status_new">未習</string>
     <string name="srs_status_due">復習</string>
-    <string name="srs_status_done">完了</string>
 
     <string name="dialog_apply">適用</string>
     <string name="dialog_cancel">キャンセル</string>
-
-    <string name="vocab_card_missing_meaning">[意味なし]</string>
-    <string name="error_unknown">不明なエラー</string>
 
     <string name="update_snackbar_title">アプリが更新されました</string>
     <string name="update_snackbar_action">変更点</string>
@@ -30,10 +24,9 @@
     <string name="general_dashboard_study_target_no_decks">デッキなし。作成へ</string>
     <string name="general_dashboard_study_target_nothing_left">今日はもう学習することがなし</string>
 
-    <string name="general_dashboard_text_analysis">テキスト分析</string>
-    <string name="general_dashboard_social">ソーシャル</string>
     <string name="general_dashboard_downloads">ダウンロード</string>
-    <string name="general_dashboard_tutorial">チュートリアル</string>
+
+    <string name="setting_daily_reset_time_item">毎日のリセット時間</string>
 
     <string name="common_dashboard_deck_details">詳細</string>
     <string name="common_dashboard_deck_edit">編集</string>
@@ -44,18 +37,6 @@
     <string name="practice_new_cards_config_last">最後</string>
     <string name="practice_new_cards_config_mixed">ランダム</string>
 
-    <string name="vocab_card_title">カード</string>
-    <string name="vocab_card_kanji">漢字の読み方</string>
-    <string name="vocab_card_kana">かなの読み方</string>
-    <string name="vocab_card_meaning">意味</string>
-    <string name="vocab_card_dictionary_meaning">辞書の意味を使用</string>
-    <string name="vocab_card_action_save">保存</string>
-    <string name="vocab_card_action_edit">編集</string>
-    <string name="vocab_card_action_add">追加</string>
-    <string name="vocab_card_invalid_kanji">漢字の読みが有効ですが空です</string>
-    <string name="vocab_card_invalid_kana">かなの読みが空です</string>
-    <string name="vocab_card_invalid_meaning">意味が空です</string>
-
     <string name="practice_summary_header_time">時間</string>
     <string name="practice_summary_header_reviews">練習したカードの数</string>
     <string name="practice_summary_header_accuracy">正解率</string>
@@ -63,8 +44,8 @@
     <string name="practice_summary_empty">レビューなし</string>
     <string name="practice_summary_button">終了</string>
 
-    <string name="save_word_dialog_title">「%1$s」を単語デッキに追加</string>
-    <string name="save_word_dialog_contains_hint">すでにあります</string>
+    <string name="save_letters_dialog_title">文字をデッキに追加</string>
+    <string name="save_letters_dialog_contains">すでに含まれています: %1$s</string>
     <string name="save_word_dialog_create_deck_button">新しいデッキを作る</string>
     <string name="save_word_dialog_create_deck_title_hint">ここにデッキのタイトルを入力...</string>
     <string name="save_word_dialog_saving_state_message">追加中</string>
@@ -76,5 +57,42 @@
     <string name="migration_dialog_loading_data">データを読み込み中...</string>
     <string name="migration_dialog_migrating_vocab_cards">単語カードを更新中...</string>
     <string name="migration_dialog_saving_changes">変更を適用中...</string>
+
+    <string name="info_no_data_letter">%1$s のデータが見つかりません</string>
+    <string name="info_no_data_copy">コピー</string>
+    <string name="info_no_data_jisho">Jishoで検索</string>
+
+    <string name="app_data_setup_title">漢字データが必要です</string>
+    <string name="app_data_setup_description">Kanji Dojo を利用するには辞書データが必要です。一度ダウンロードするか、お手持ちのデータファイルを読み込んでください。</string>
+    <string name="app_data_setup_checking">データを確認中...</string>
+    <string name="app_data_setup_download">データをダウンロード</string>
+    <string name="app_data_setup_download_size">約 20 MB</string>
+    <string name="app_data_setup_import">ファイルから読み込む</string>
+    <string name="app_data_setup_import_hint">Kanji Dojo のデータファイルを選択してください（.sql、.sqlite、.db、.sql.gz）</string>
+    <string name="app_data_setup_downloading">データをダウンロード中... %1$d%%</string>
+    <string name="app_data_setup_downloading_indeterminate">データをダウンロード中...</string>
+    <string name="app_data_setup_importing">データを読み込み中... %1$d%%</string>
+    <string name="app_data_setup_importing_indeterminate">データを読み込み中...</string>
+    <string name="app_data_setup_preparing">データを準備中...</string>
+    <string name="app_data_setup_extracting">データを展開中...</string>
+    <string name="app_data_setup_validating">データを確認中...</string>
+    <string name="app_data_setup_installing">データをインストール中...</string>
+    <string name="app_data_setup_error_generic">エラーが発生しました。もう一度お試しください。</string>
+    <string name="app_data_setup_error_network">ダウンロードに失敗しました。インターネット接続を確認して、もう一度お試しください。</string>
+    <string name="app_data_setup_error_not_configured">このビルドではダウンロードが設定されていません。データファイルを読み込んでください。</string>
+    <string name="app_data_setup_error_invalid_file">このファイルは有効な Kanji Dojo データファイルではありません。</string>
+    <string name="app_data_setup_error_version">このデータファイルのバージョンは %1$d ですが、バージョン %2$d が必要です。</string>
+    <string name="app_data_setup_error_no_vietnamese">このデータファイルにはベトナム語データが含まれていません。</string>
+    <string name="app_data_setup_error_space">空き容量が不足しています。ストレージを空けて、もう一度お試しください。</string>
+    <string name="app_data_setup_error_storage">データファイルを保存できませんでした。ストレージを確認して、もう一度お試しください。</string>
+    <string name="app_data_setup_error_unknown">予期しないエラー: %1$s</string>
+    <string name="app_data_setup_outdated">インストール済みのデータはバージョン %1$d ですが、バージョン %2$d が必要です。</string>
+    <string name="app_data_setup_data_version">データバージョン %1$d</string>
+    <string name="app_data_setup_decks_note">デッキと学習進捗は別に保存されるため、影響はありません。</string>
+    <string name="app_data_setup_installed">データをインストールしました</string>
+    <string name="app_data_setup_installed_description">Kanji Dojo を起動しています...</string>
+
+    <string name="setting_show_on_kun_title">音読みと訓読みを表示</string>
+    <string name="setting_show_on_kun_message">漢字の詳細に音読み・訓読みを表示します。漢越音は常に表示されます。</string>
 
 </resources>

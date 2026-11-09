@@ -6,9 +6,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 import ua.syt0r.kanji.core.srs.SrsItemStatus
-import ua.syt0r.kanji.core.user_data.database.SavedVocabCard
 import ua.syt0r.kanji.presentation.common.ScreenLetterPracticeType
-import ua.syt0r.kanji.presentation.common.ScreenVocabPracticeType
 
 
 @Serializable
@@ -18,9 +16,6 @@ sealed interface DeckDetailsScreenConfiguration {
 
     @Serializable
     data class LetterDeck(override val deckId: Long) : DeckDetailsScreenConfiguration
-
-    @Serializable
-    data class VocabDeck(override val deckId: Long) : DeckDetailsScreenConfiguration
 
 }
 
@@ -33,11 +28,6 @@ sealed interface DeckDetailsData {
         override val deckTitle: String,
         override val items: List<DeckDetailsItemData.LetterData>,
         val sharableDeckData: String,
-    ) : DeckDetailsData
-
-    data class VocabDeckData(
-        override val deckTitle: String,
-        override val items: List<DeckDetailsItemData.VocabData>
     ) : DeckDetailsData
 
 }
@@ -56,10 +46,6 @@ sealed interface DeckDetailsVisibleData {
         val selectedItem: MutableState<DeckDetailsListItem.Group?>
     ) : DeckDetailsVisibleData
 
-    data class Vocab(
-        override val items: List<DeckDetailsListItem.Vocab>
-    ) : DeckDetailsVisibleData
-
 }
 
 sealed interface DeckDetailsItemData {
@@ -69,14 +55,6 @@ sealed interface DeckDetailsItemData {
         val positionInPractice: Int,
         val frequency: Int?,
         val summaryMap: Map<ScreenLetterPracticeType, PracticeItemSummary>
-    ) : DeckDetailsItemData
-
-    data class VocabData(
-        val reading: String,
-        val meaning: String,
-        val card: SavedVocabCard,
-        val positionInPractice: Int,
-        val srsStatus: Map<ScreenVocabPracticeType, SrsItemStatus>
     ) : DeckDetailsItemData
 
 }
@@ -114,14 +92,6 @@ sealed interface DeckDetailsListItem {
         val items: List<DeckDetailsItemData.LetterData>,
         val summary: PracticeGroupSummary,
         val reviewState: SrsItemStatus,
-        val initialSelectionState: Boolean
-    ) : DeckDetailsListItem {
-        override val selected: MutableState<Boolean> = mutableStateOf(initialSelectionState)
-    }
-
-    data class Vocab(
-        override val key: DeckDetailsListItemKey,
-        val data: DeckDetailsItemData.VocabData,
         val initialSelectionState: Boolean
     ) : DeckDetailsListItem {
         override val selected: MutableState<Boolean> = mutableStateOf(initialSelectionState)

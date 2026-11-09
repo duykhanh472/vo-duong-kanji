@@ -23,7 +23,6 @@ data class DeckStudyProgress<T>(
 }
 
 typealias LetterDeckStudyProgress = DeckStudyProgress<String>
-typealias VocabDeckStudyProgress = DeckStudyProgress<Long>
 
 interface DeckDashboardItem {
     val deckId: Long
@@ -48,14 +47,6 @@ data class LetterDeckDashboardItem(
     )
 
 }
-
-data class VocabDeckDashboardItem(
-    override val deckId: Long,
-    override val title: String,
-    override val position: Int,
-    override val elapsedSinceLastReview: Duration?,
-    override val studyProgress: Map<ScreenPracticeType, VocabDeckStudyProgress>,
-) : DeckDashboardItem
 
 data class DeckDashboardListState(
     val items: List<DeckDashboardItem>,

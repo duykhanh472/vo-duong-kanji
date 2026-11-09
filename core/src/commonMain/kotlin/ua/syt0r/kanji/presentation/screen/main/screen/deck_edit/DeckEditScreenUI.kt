@@ -72,7 +72,6 @@ import ua.syt0r.kanji.presentation.screen.main.screen.deck_edit.ui.DeckEditUnkno
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_edit.ui.DeleteDeckDialog
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_edit.ui.LetterDeckEditingUI
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_edit.ui.SaveDeckDialog
-import ua.syt0r.kanji.presentation.screen.main.screen.deck_edit.ui.VocabDeckEditingUI
 
 @Composable
 fun DeckEditScreenUI(
@@ -83,10 +82,8 @@ fun DeckEditScreenUI(
     dismissSearchResult: () -> Unit,
     onItemClick: (DeckEditListItem) -> Unit,
     toggleRemoval: (DeckEditListItem) -> Unit,
-    editItem: (VocabDeckEditListItem) -> Unit,
     saveChanges: () -> Unit,
     deleteDeck: () -> Unit,
-    addNewVocabCardClick: () -> Unit,
     onCompleted: (ScreenState.Completed) -> Unit
 ) {
 
@@ -135,8 +132,7 @@ fun DeckEditScreenUI(
                         navigateBack()
                     }
                 },
-                onDeleteClick = { showDeleteConfirmationDialog = true },
-                addNewVocabCardClick = addNewVocabCardClick
+                onDeleteClick = { showDeleteConfirmationDialog = true }
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
@@ -167,7 +163,6 @@ fun DeckEditScreenUI(
                         dismissSearchResult = dismissSearchResult,
                         onItemClick = onItemClick,
                         toggleRemoval = toggleRemoval,
-                        editItem = editItem,
                         onSaveConfirmed = saveChanges
                     )
                 }
@@ -204,9 +199,7 @@ fun DeckEditScreenUI(
 }
 
 private data class ToolbarButtonsState(
-    val showVocabReadingSwapButton: Boolean,
-    val showDeckDeleteButton: Boolean,
-    val showNewVocabCardButton: Boolean
+    val showDeckDeleteButton: Boolean
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -215,8 +208,7 @@ private fun Toolbar(
     state: State<ScreenState>,
     configuration: DeckEditScreenConfiguration,
     navigateUp: () -> Unit,
-    onDeleteClick: () -> Unit,
-    addNewVocabCardClick: () -> Unit
+    onDeleteClick: () -> Unit
 ) {
 
     TopAppBar(
@@ -224,11 +216,8 @@ private fun Toolbar(
             Text(
                 text = resolveString {
                     when (configuration) {
-                        is DeckEditScreenConfiguration.LetterDeck.Edit,
-                        is DeckEditScreenConfiguration.VocabDeck.Edit -> deckEdit.ediTitle
-
-                        is DeckEditScreenConfiguration.LetterDeck,
-                        is DeckEditScreenConfiguration.VocabDeck -> deckEdit.createTitle
+                        is DeckEditScreenConfiguration.LetterDeck.Edit -> deckEdit.ediTitle
+                        is DeckEditScreenConfiguration.LetterDeck -> deckEdit.createTitle
                     }
                 }
             )
@@ -246,18 +235,9 @@ private fun Toolbar(
                 derivedStateOf {
                     val isLoaded = state.value is ScreenState.Loaded
                     ToolbarButtonsState(
-                        showVocabReadingSwapButton = isLoaded &&
-                                configuration is DeckEditScreenConfiguration.VocabDeck,
                         showDeckDeleteButton = isLoaded &&
-                                configuration is DeckEditScreenConfiguration.EditExisting,
-                        showNewVocabCardButton = isLoaded &&
-                                configuration is DeckEditScreenConfiguration.VocabDeck
+                                configuration is DeckEditScreenConfiguration.EditExisting
                     )
-                }
-            }
-            if (toolbarButtonsState.showNewVocabCardButton) {
-                IconButton(addNewVocabCardClick) {
-                    Icon(Icons.Default.Add, null)
                 }
             }
             if (toolbarButtonsState.showDeckDeleteButton) {
@@ -277,7 +257,6 @@ private fun LoadedState(
     dismissSearchResult: () -> Unit,
     onItemClick: (DeckEditListItem) -> Unit,
     toggleRemoval: (DeckEditListItem) -> Unit,
-    editItem: (VocabDeckEditListItem) -> Unit,
     onSaveConfirmed: () -> Unit
 ) {
 
@@ -314,15 +293,6 @@ private fun LoadedState(
                     }
             }
 
-            is ScreenState.VocabDeckEditing -> {
-                VocabDeckEditingUI(
-                    screenState = screenState,
-                    extraListSpacerState = extraListSpacerState,
-                    onItemClick = onItemClick,
-                    toggleRemoval = toggleRemoval,
-                    editItem = editItem
-                )
-            }
         }
 
         val shouldShow = remember {

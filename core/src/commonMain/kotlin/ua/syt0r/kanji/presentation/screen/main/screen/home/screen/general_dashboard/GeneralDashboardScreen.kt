@@ -28,15 +28,8 @@ fun GeneralDashboardScreen(
             val destination = MainDestination.DeckPicker(DeckPickerScreenConfiguration.Letters)
             mainNavigationState.navigate(destination)
         },
-        navigateToCreateVocabDeck = {
-            val destination = MainDestination.DeckPicker(DeckPickerScreenConfiguration.Vocab)
-            mainNavigationState.navigate(destination)
-        },
         navigateToLetterPractice = { mainNavigationState.navigate(it) },
-        navigateToVocabPractice = { mainNavigationState.navigate(it) },
-        downloadsClick = { uriHandler.openUri(DownloadsUrl) },
-        socialClick = { uriHandler.openUri(it.url) },
-        textAnalysisClick = { mainNavigationState.navigate(MainDestination.TextAnalysis) }
+        downloadsClick = { uriHandler.openUri(DownloadsUrl) }
     )
 
 }

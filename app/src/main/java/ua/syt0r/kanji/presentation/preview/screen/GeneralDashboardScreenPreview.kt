@@ -42,12 +42,8 @@ private fun Preview() {
                 ),
                 navigateToDailyLimitConfiguration = {},
                 navigateToCreateLetterDeck = {},
-                navigateToCreateVocabDeck = {},
                 navigateToLetterPractice = {},
-                navigateToVocabPractice = {},
-                downloadsClick = {},
-                socialClick = {},
-                textAnalysisClick = {}
+                downloadsClick = {}
             )
         }
     }

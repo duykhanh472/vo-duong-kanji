@@ -46,7 +46,7 @@ class DefaultBackupManager(
             Logger.d("importing preferences")
             preferencesBackupManager.importPreferences(jsonObject = it.preferences)
             Logger.d("replaceDatabase")
-            userDataDatabaseManager.replaceDatabase(it.databaseReadChannel)
+            userDataDatabaseManager.replaceDatabase(it.databaseContent)
             Logger.d("replaceDatabase completed")
         }
         restoreCompletionNotifier.notify()

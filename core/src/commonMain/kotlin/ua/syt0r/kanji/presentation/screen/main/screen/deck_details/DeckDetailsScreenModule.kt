@@ -12,11 +12,9 @@ import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.use_case.Defa
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.use_case.DefaultDeckDetailsGetConfigurationUseCase
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.use_case.DefaultGetDeckDetailsVisibleDataUseCase
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.use_case.DefaultSubscribeOnDeckDetailsDataUseCase
-import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.use_case.DefaultSubscribeOnVocabDeckDetailsDataUseCase
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.use_case.DefaultUpdateDeckDetailsConfigurationUseCase
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.use_case.GetDeckDetailsVisibleDataUseCase
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.use_case.SubscribeOnDeckDetailsDataUseCase
-import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.use_case.SubscribeOnVocabDeckDetailsDataUseCase
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.use_case.UpdateDeckDetailsConfigurationUseCase
 
 val deckDetailsScreenModule = module {
@@ -25,7 +23,6 @@ val deckDetailsScreenModule = module {
         DeckDetailsViewModel(
             viewModelScope = it.component1(),
             subscribeOnLettersDataUseCase = get(),
-            subscribeOnVocabDataUseCase = get(),
             getConfigurationUseCase = get(),
             updateConfigurationUseCase = get(),
             getVisibleDataUseCase = get(),
@@ -36,14 +33,6 @@ val deckDetailsScreenModule = module {
     factory<SubscribeOnDeckDetailsDataUseCase> {
         DefaultSubscribeOnDeckDetailsDataUseCase(
             letterSrsManager = get(),
-            appDataRepository = get()
-        )
-    }
-
-    factory<SubscribeOnVocabDeckDetailsDataUseCase> {
-        DefaultSubscribeOnVocabDeckDetailsDataUseCase(
-            vocabSrsManager = get(),
-            vocabPracticeRepository = get(),
             appDataRepository = get()
         )
     }

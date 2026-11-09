@@ -50,9 +50,6 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
-import io.ktor.http.URLProtocol
-import io.ktor.http.appendPathSegments
-import io.ktor.http.buildUrl
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import ua.syt0r.kanji.Res
@@ -61,7 +58,6 @@ import ua.syt0r.kanji.core.app_data.data.JapaneseWord
 import ua.syt0r.kanji.info_no_data_copy
 import ua.syt0r.kanji.info_no_data_jisho
 import ua.syt0r.kanji.info_no_data_letter
-import ua.syt0r.kanji.info_no_data_vocab
 import ua.syt0r.kanji.presentation.common.AppListItem
 import ua.syt0r.kanji.presentation.common.ExpandButton
 import ua.syt0r.kanji.presentation.common.ExtraListSpacerState
@@ -76,7 +72,6 @@ import ua.syt0r.kanji.presentation.common.trackOverlay
 import ua.syt0r.kanji.presentation.common.ui.ClickableFuriganaText
 import ua.syt0r.kanji.presentation.screen.main.screen.info.InfoScreenContract.ScreenState
 import ua.syt0r.kanji.presentation.screen.main.screen.info.ui.LetterInfoUI
-import ua.syt0r.kanji.presentation.screen.main.screen.info.ui.VocabInfoUI
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,8 +79,7 @@ import ua.syt0r.kanji.presentation.screen.main.screen.info.ui.VocabInfoUI
 fun InfoScreenUI(
     state: State<ScreenState>,
     onUpButtonClick: () -> Unit,
-    onLetterClick: (String) -> Unit,
-    onWordClick: (JapaneseWord) -> Unit
+    onLetterClick: (String) -> Unit
 ) {
 
     ScreenLayout(
@@ -105,16 +99,7 @@ fun InfoScreenUI(
                 letterData = data,
                 listState = listState,
                 listSpacerState = listSpacerState,
-                onFuriganaClick = onLetterClick,
-                onWordClick = onWordClick
-            )
-        },
-        vocab = { data, listState, listSpacerState ->
-            VocabInfoUI(
-                vocabData = data,
-                listState = listState,
-                listSpacerState = listSpacerState,
-                onLetterClick = onLetterClick
+                onFuriganaClick = onLetterClick
             )
         },
         noData = {
@@ -126,11 +111,6 @@ fun InfoScreenUI(
                 is InfoScreenData.Letter -> {
                     searchTerm = it.letter
                     message = stringResource(Res.string.info_no_data_letter, it.letter)
-                }
-
-                is InfoScreenData.Vocab -> {
-                    searchTerm = it.kanjiReading ?: it.kanaReading ?: it.id!!.toString()
-                    message = stringResource(Res.string.info_no_data_vocab, searchTerm)
                 }
             }
 
@@ -179,7 +159,6 @@ private fun ScreenLayout(
     state: State<ScreenState>,
     toolbar: @Composable () -> Unit,
     letter: @Composable (LetterInfoData, LazyListState, ExtraListSpacerState) -> Unit,
-    vocab: @Composable (VocabInfoData, LazyListState, ExtraListSpacerState) -> Unit,
     noData: @Composable (InfoScreenData) -> Unit
 ) {
 
@@ -233,10 +212,6 @@ private fun ScreenLayout(
 
                 is ScreenState.Loaded.Letter -> {
                     letter(screenState.data, listState, extraListSpacerState)
-                }
-
-                is ScreenState.Loaded.Vocab -> {
-                    vocab(screenState.data, listState, extraListSpacerState)
                 }
             }
 
@@ -322,8 +297,6 @@ private fun ExpandableSectionHeader(
 fun LazyListScope.infoScreenExpandableVocabSection(
     expanded: MutableState<Boolean>,
     paginateable: PaginateableState<JapaneseWord>,
-    onWordClick: (JapaneseWord) -> Unit,
-    addWordToVocabDeckClick: (JapaneseWord) -> Unit,
     onFuriganaClick: (String) -> Unit
 ) {
 
@@ -345,9 +318,7 @@ fun LazyListScope.infoScreenExpandableVocabSection(
                                     onFuriganaClick = onFuriganaClick
                                 )
                             }
-                        },
-                        onClick = { onWordClick(word) },
-                        addWordToVocabDeckClick = { addWordToVocabDeckClick(word) }
+                        }
                     )
                 }
             )

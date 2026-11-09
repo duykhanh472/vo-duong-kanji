@@ -34,12 +34,11 @@ enum class DisplayableDefaultHomeTab(
 ) : DisplayableEnum {
 
     GeneralDashboard(PreferencesDefaultHomeTab.GeneralDashboard, { home.generalDashboardTabLabel }),
-    Letters(PreferencesDefaultHomeTab.Letters, { home.lettersDashboardTabLabel }),
-    Vocab(PreferencesDefaultHomeTab.Vocab, { home.vocabDashboardTabLabel });
+    Letters(PreferencesDefaultHomeTab.Letters, { home.lettersDashboardTabLabel });
 
     companion object {
         fun from(prefType: PreferencesDefaultHomeTab): DisplayableDefaultHomeTab =
-            entries.first { it.prefType == prefType }
+            entries.firstOrNull { it.prefType == prefType } ?: Letters
     }
 
 }

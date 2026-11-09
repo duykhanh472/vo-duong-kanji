@@ -153,6 +153,7 @@ fun LetterInfoKanjiHeading(data: LetterInfoData.Kanji) {
                 KanjiReadingsContainer(
                     on = data.on,
                     kun = data.kun,
+                    hanViet = data.hanViet,
                     modifier = Modifier.fillMaxWidth()
                 )
 

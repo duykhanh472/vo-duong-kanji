@@ -6,12 +6,11 @@ import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import ua.syt0r.kanji.di.appComponentsModule
 import ua.syt0r.kanji.di.appModules
-import ua.syt0r.kanji.flavorModule
 
 class KanjiApplication : Application() {
 
     companion object {
-        private val modules = appModules + flavorModule + appComponentsModule
+        private val modules = appModules + appComponentsModule
     }
 
     override fun onCreate() {

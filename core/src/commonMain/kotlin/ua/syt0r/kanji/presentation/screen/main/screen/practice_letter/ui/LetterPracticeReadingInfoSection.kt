@@ -117,6 +117,7 @@ private fun ColumnScope.KanjiDetails(
     KanjiReadingsContainer(
         on = data.on,
         kun = data.kun,
+        hanViet = data.hanViet,
         modifier = Modifier.fillMaxWidth().alpha(alpha.value)
     )
 

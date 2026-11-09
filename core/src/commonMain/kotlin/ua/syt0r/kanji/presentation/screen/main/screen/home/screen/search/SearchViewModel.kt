@@ -6,7 +6,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.async
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.consumeAsFlow
@@ -17,24 +16,19 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ua.syt0r.kanji.core.analytics.AnalyticsManager
 import ua.syt0r.kanji.core.logger.Logger
-import ua.syt0r.kanji.presentation.common.PaginatableJapaneseWordList
 import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.search.SearchScreenContract.ScreenState
 import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.search.data.RadicalSearchState
 
 class SearchViewModel(
     private val viewModelScope: CoroutineScope,
     private val processInputUseCase: SearchScreenContract.ProcessInputUseCase,
-    private val loadMoreWordsUseCase: SearchScreenContract.LoadMoreWordsUseCase,
     private val loadRadicalsUseCase: SearchScreenContract.LoadRadicalsUseCase,
     private val searchByRadicalsUseCase: SearchScreenContract.SearchByRadicalsUseCase,
-    private val updateEnabledRadicalsUseCase: SearchScreenContract.UpdateEnabledRadicalsUseCase,
-    private val analyticsManager: AnalyticsManager
+    private val updateEnabledRadicalsUseCase: SearchScreenContract.UpdateEnabledRadicalsUseCase
 ) : SearchScreenContract.ViewModel {
 
     private val searchQueriesChannel = Channel<String>(Channel.BUFFERED)
-    private val loadMoreWordsChannel = Channel<Int>(Channel.RENDEZVOUS, BufferOverflow.DROP_LATEST)
 
     private val radicalsDataInitialLoadChannel = Channel<Unit>(Channel.BUFFERED)
     private val radicalsLoadedCompletable = CompletableDeferred<Unit>()
@@ -44,7 +38,6 @@ class SearchViewModel(
         ScreenState(
             isLoading = false,
             characters = emptyList(),
-            words = mutableStateOf(PaginatableJapaneseWordList(0, emptyList())),
             query = ""
         )
     )
@@ -62,18 +55,11 @@ class SearchViewModel(
         handleSearchQueries()
         handleRadicalsLoading(radicalsLoadedCompletable)
         handleRadicalSearchQueries(radicalsLoadedCompletable)
-        handleLoadMoreWordsRequests()
     }
 
     override fun search(input: String) {
         Logger.d("sending input $input")
         searchQueriesChannel.trySend(input)
-    }
-
-    override fun loadMoreWords() {
-        Logger.d(">>")
-        val currentState = state.value.words.value
-        loadMoreWordsChannel.trySend(currentState.items.size)
     }
 
     override fun loadRadicalsData() {
@@ -154,11 +140,6 @@ class SearchViewModel(
 
                 radicalsState.value = updatedState.await()
             }
-    }
-
-    private fun handleLoadMoreWordsRequests() = viewModelScope.launch {
-        loadMoreWordsChannel.consumeAsFlow()
-            .collect { loadMoreWordsUseCase.loadMore(state.value) }
     }
 
 }

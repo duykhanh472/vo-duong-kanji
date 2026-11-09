@@ -237,13 +237,6 @@ private fun LoadedState(screenState: ScreenState.Loaded) {
             )
         }
 
-        item {
-            InfoCard(
-                title = statsData.totalStats.uniqueWordsStudied.toString(),
-                subtitle = strings.uniqueWordsReviewed
-            )
-        }
-
         item(span = StaggeredGridItemSpan.FullLine) {
             Spacer(Modifier.height(20.dp))
         }

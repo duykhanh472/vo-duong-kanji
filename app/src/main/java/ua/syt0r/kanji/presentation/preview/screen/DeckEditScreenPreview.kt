@@ -29,11 +29,9 @@ private fun BasePreview(
             dismissSearchResult = {},
             onItemClick = {},
             toggleRemoval = {},
-            editItem = {},
             saveChanges = {},
             deleteDeck = {},
             onCompleted = {},
-            addNewVocabCardClick = {}
         )
     }
 }

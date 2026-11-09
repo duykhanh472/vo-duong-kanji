@@ -1,6 +1,5 @@
 package ua.syt0r.kanji.core.user_data.database
 
-import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +14,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ua.syt0r.kanji.core.file.ContentSource
 import ua.syt0r.kanji.core.logger.Logger
 import ua.syt0r.kanji.core.readUserVersion
 import ua.syt0r.kanji.core.user_data.database.use_case.UpdateLocalDataTimestampUseCase
@@ -86,8 +86,8 @@ class DefaultUserDataDatabaseManager(
         }
     }
 
-    override suspend fun replaceDatabase(byteReadChannel: ByteReadChannel) {
-        withDisconnectedDatabase { databasePlatformHandler.replaceDatabaseFile(byteReadChannel) }
+    override suspend fun replaceDatabase(content: ContentSource) {
+        withDisconnectedDatabase { databasePlatformHandler.replaceDatabaseFile(content) }
         Logger.d("notify database changed >>")
         _databaseChangeEvents.emit(Unit)
         Logger.d("notify database changed <<")

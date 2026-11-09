@@ -2,9 +2,9 @@ package ua.syt0r.kanji.core.user_data.database
 
 import app.cash.sqldelight.db.AfterVersion
 import app.cash.sqldelight.db.SqlDriver
-import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import ua.syt0r.kanji.core.file.ContentSource
 import ua.syt0r.kanji.core.file.PlatformFile
 import ua.syt0r.kanji.core.userdata.db.UserDataQueries
 
@@ -18,13 +18,13 @@ interface UserDataDatabaseContract {
     interface Manager : TransactionScope {
         val databaseChangeEvents: SharedFlow<Unit>
         suspend fun withDisconnectedDatabase(scope: suspend (info: UserDatabaseInfo) -> Unit)
-        suspend fun replaceDatabase(byteReadChannel: ByteReadChannel)
+        suspend fun replaceDatabase(content: ContentSource)
     }
 
     interface PlatformHandler {
         suspend fun newConnection(): DatabaseConnection
         fun getDatabaseAsFile(): PlatformFile
-        suspend fun replaceDatabaseFile(content: ByteReadChannel)
+        suspend fun replaceDatabaseFile(content: ContentSource)
     }
 
     interface Migration {

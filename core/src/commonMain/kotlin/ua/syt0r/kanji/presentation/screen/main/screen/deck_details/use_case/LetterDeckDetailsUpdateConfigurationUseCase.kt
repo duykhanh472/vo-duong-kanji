@@ -10,10 +10,6 @@ interface UpdateDeckDetailsConfigurationUseCase {
         configuration: DeckDetailsConfiguration.LetterDeckConfiguration
     )
 
-    suspend operator fun invoke(
-        configuration: DeckDetailsConfiguration.VocabDeckConfiguration
-    )
-
 }
 
 class DefaultUpdateDeckDetailsConfigurationUseCase(
@@ -31,10 +27,6 @@ class DefaultUpdateDeckDetailsConfigurationUseCase(
             practicePreviewLayout.set(configuration.layout.correspondingRepoType)
             kanaGroupsEnabled.set(configuration.kanaGroups)
         }
-    }
-
-    override suspend fun invoke(configuration: DeckDetailsConfiguration.VocabDeckConfiguration) {
-
     }
 
 }

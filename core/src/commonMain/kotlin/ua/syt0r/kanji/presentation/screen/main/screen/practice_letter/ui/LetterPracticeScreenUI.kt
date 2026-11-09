@@ -52,7 +52,6 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import ua.syt0r.kanji.Res
-import ua.syt0r.kanji.core.app_data.data.JapaneseWord
 import ua.syt0r.kanji.core.japanese.CharacterClassification
 import ua.syt0r.kanji.core.japanese.KanaReading
 import ua.syt0r.kanji.core.toRadians
@@ -87,11 +86,9 @@ import kotlin.math.cos
 fun LetterPracticeScreenUI(
     state: State<ScreenState>,
     navigateBack: () -> Unit,
-    navigateToWordFeedback: (JapaneseWord) -> Unit,
     onConfigured: () -> Unit,
     speakKana: (KanaReading) -> Unit,
     onNextClick: (PracticeAnswer) -> Unit,
-    onWordClick: (JapaneseWord) -> Unit,
     onSummaryItemCLick: (LetterPracticeSummaryItem) -> Unit,
     finishPractice: () -> Unit,
     onPracticeCompleted: () -> Unit
@@ -142,8 +139,7 @@ fun LetterPracticeScreenUI(
             ReviewState(
                 reviewState = it.reviewState,
                 onNextClick = onNextClick,
-                speakKana = speakKana,
-                onWordClick = onWordClick
+                speakKana = speakKana
             )
         },
         summary = {
@@ -322,8 +318,7 @@ private fun ConfiguringState(
 private fun ReviewState(
     reviewState: LetterPracticeReviewState,
     onNextClick: (PracticeAnswer) -> Unit,
-    speakKana: (KanaReading) -> Unit,
-    onWordClick: (JapaneseWord) -> Unit
+    speakKana: (KanaReading) -> Unit
 ) {
 
     when (reviewState) {
@@ -331,15 +326,13 @@ private fun ReviewState(
             layoutConfiguration = reviewState.layout,
             reviewState = reviewState,
             onNextClick = onNextClick,
-            speakKana = speakKana,
-            onWordClick = onWordClick
+            speakKana = speakKana
         )
 
         is LetterPracticeReviewState.Reading -> LetterPracticeReadingUI(
             reviewState = reviewState,
             onNextClick = onNextClick,
-            speakKana = speakKana,
-            onWordClick = onWordClick
+            speakKana = speakKana
         )
     }
 

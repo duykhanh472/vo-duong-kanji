@@ -8,7 +8,7 @@ import ua.syt0r.kanji.presentation.screen.main.screen.deck_picker.use_case.GetDe
 val deckPickerScreenModule = module {
 
     factory<GetDeckPickerCategoriesUseCase> {
-        DefaultGetDeckPickerCategoriesUseCase(appDataRepository = get())
+        DefaultGetDeckPickerCategoriesUseCase()
     }
 
     multiplatformViewModel<DeckPickerScreenContract.ViewModel> {

@@ -1,11 +1,5 @@
 package ua.syt0r.kanji.presentation.screen.main.screen.practice_common
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.snap
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
@@ -150,38 +144,6 @@ fun PracticeAnswerButtonsRow(
                 color = MaterialTheme.extraColorScheme.new
             )
         }
-    }
-
-}
-
-data class ExpandableVocabPracticeAnswersRowState(
-    val answers: PracticeAnswers,
-    val showButton: Boolean
-)
-
-@Composable
-fun ExpandablePracticeAnswerButtonsRow(
-    state: State<ExpandableVocabPracticeAnswersRowState>,
-    onClick: (PracticeAnswer) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-
-    AnimatedContent(
-        targetState = state.value,
-        contentKey = {},
-        transitionSpec = { fadeIn(snap()) togetherWith fadeOut(snap()) },
-        modifier = modifier
-    ) { data ->
-
-        val offset = animateFloatAsState(if (data.showButton) 0f else 1f)
-
-        PracticeAnswerButtonsRow(
-            answers = data.answers,
-            onClick = onClick,
-            enableKeyboardControls = data.showButton,
-            modifier = Modifier.graphicsLayer { translationY = size.height * offset.value },
-        )
-
     }
 
 }

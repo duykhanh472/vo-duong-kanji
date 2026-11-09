@@ -14,11 +14,7 @@ plugins {
 
 kotlin {
 
-    jvm()
     androidTarget()
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
 
     jvmToolchain(17)
     compilerOptions {
@@ -48,10 +44,6 @@ kotlin {
 
                 implementation(libs.datastore.preferences.core)
                 implementation(libs.wanakana.core)
-
-                api(libs.ktor.client.core)
-                implementation(libs.ktor.client.cio)
-                implementation(libs.ktor.client.auth)
 
                 api(libs.aboutlibraries.core)
 
@@ -83,19 +75,6 @@ kotlin {
                 api(libs.core.ktx)
                 api(libs.appcompat)
                 implementation(libs.media3.exoplayer)
-            }
-        }
-        val jvmMain by getting {
-            dependencies {
-                implementation(compose.desktop.currentOs)
-                implementation(libs.sqldelight.jvm.sqlite.driver)
-                implementation(libs.ktor.server.netty)
-            }
-        }
-        iosMain {
-            dependencies {
-                implementation(libs.sqldelight.native.sqlite.driver)
-                implementation(libs.ktor.client.darwin)
             }
         }
     }
@@ -156,6 +135,13 @@ buildConfig {
     buildConfigField("versionName", AppVersion.versionName)
     buildConfigField("appDataAssetName", AppAssets.AppDataAssetFileName)
     buildConfigField("appDataDatabaseVersion", AppAssets.AppDataDatabaseVersion)
+    buildConfigField(
+        "appDataDownloadUrl",
+        (findProperty("kanjiDataUrl") as String?)
+            ?.trim()
+            ?.takeIf { it.isNotEmpty() }
+            ?: AppAssets.AppDataDownloadUrl
+    )
 
     val kanaVoiceFieldName = "kanaVoiceAssetName"
 
@@ -163,20 +149,6 @@ buildConfig {
         buildConfigField(
             name = kanaVoiceFieldName,
             value = AppAssets.kanaVoiceOpus.fileName
-        )
-    }
-
-    sourceSets.getByName("jvmMain") {
-        buildConfigField(
-            name = kanaVoiceFieldName,
-            value = AppAssets.kanaVoiceWav.fileName
-        )
-    }
-
-    sourceSets.getByName("iosMain") {
-        buildConfigField(
-            name = kanaVoiceFieldName,
-            value = AppAssets.kanaVoiceWav.fileName
         )
     }
 

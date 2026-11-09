@@ -55,7 +55,6 @@ import ua.syt0r.kanji.core.srs.SrsItemStatus
 import ua.syt0r.kanji.presentation.common.ExtraListSpacerState
 import ua.syt0r.kanji.presentation.common.MultiplatformBackHandler
 import ua.syt0r.kanji.presentation.common.ScreenLetterPracticeType
-import ua.syt0r.kanji.presentation.common.ScreenVocabPracticeType
 import ua.syt0r.kanji.presentation.common.rememberExtraListSpacerState
 import ua.syt0r.kanji.presentation.common.resources.icon.ExtraIcons
 import ua.syt0r.kanji.presentation.common.resources.icon.RadioButtonChecked
@@ -75,7 +74,6 @@ import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.ui.DeckDetail
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.ui.DeckDetailsLayoutDialog
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.ui.DeckDetailsSortDialog
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.ui.DeckDetailsToolbar
-import ua.syt0r.kanji.presentation.screen.main.screen.deck_details.ui.DeckDetailsVocabUI
 
 @Composable
 fun DeckDetailsScreenUI(
@@ -83,7 +81,6 @@ fun DeckDetailsScreenUI(
     navigateUp: () -> Unit,
     navigateToDeckEdit: () -> Unit,
     navigateToCharacterDetails: (String) -> Unit,
-    navigateToCardDetails: (DeckDetailsListItem.Vocab) -> Unit,
     startGroupReview: (DeckDetailsListItem.Group) -> Unit,
     startMultiselectReview: () -> Unit,
 ) {
@@ -151,7 +148,6 @@ fun DeckDetailsScreenUI(
             ScreenContent(
                 state = state,
                 navigateToCharacterDetails = navigateToCharacterDetails,
-                onCardClick = navigateToCardDetails,
                 showGroupSheet = {
                     coroutineScope.launch { bottomSheetState.show() }
                 },
@@ -177,7 +173,6 @@ fun DeckDetailsScreenUI(
 private fun ScreenContent(
     state: State<ScreenState>,
     navigateToCharacterDetails: (String) -> Unit,
-    onCardClick: (DeckDetailsListItem.Vocab) -> Unit,
     showGroupSheet: () -> Unit,
     startMultiselectReview: () -> Unit,
     showNoSelectionMessage: () -> Unit,
@@ -205,7 +200,6 @@ private fun ScreenContent(
                     onCharacterClick = navigateToCharacterDetails,
                     showGroupSheet = showGroupSheet,
                     toggleItemSelection = { it.selected.run { value = !value } },
-                    onCardClick = onCardClick
                 )
 
                 if (screenState.isSelectionModeEnabled.value) {
@@ -254,7 +248,6 @@ private fun ScreenLoadedState(
     onCharacterClick: (String) -> Unit,
     showGroupSheet: () -> Unit,
     toggleItemSelection: (DeckDetailsListItem) -> Unit,
-    onCardClick: (DeckDetailsListItem.Vocab) -> Unit
 ) {
 
     Box(
@@ -297,17 +290,6 @@ private fun ScreenLoadedState(
                     )
                 }
 
-                is DeckDetailsVisibleData.Vocab -> {
-                    screenState as ScreenState.Loaded.Vocab
-                    DeckDetailsVocabUI(
-                        screenState = screenState,
-                        visibleData = visibleData,
-                        extraListSpacerState = extraListSpacerState,
-                        onConfigurationUpdate = { screenState.configuration.value = it },
-                        toggleItemSelection = toggleItemSelection,
-                        onCardClick = onCardClick
-                    )
-                }
             }
 
         }
@@ -492,54 +474,6 @@ private fun SrsFilterChip(
         },
         trailingIcon = { Icon(Icons.Default.FilterAlt, null) }
     )
-}
-
-@Composable
-fun DeckDetailsConfigurationRow(
-    configuration: DeckDetailsConfiguration.VocabDeckConfiguration,
-    onConfigurationUpdate: (DeckDetailsConfiguration.VocabDeckConfiguration) -> Unit,
-) {
-
-    var showFilterOptionDialog by remember { mutableStateOf(false) }
-    if (showFilterOptionDialog) {
-        DeckDetailsFilterDialog(
-            filter = configuration.filterConfiguration,
-            onDismissRequest = { showFilterOptionDialog = false },
-            onApplyConfiguration = {
-                showFilterOptionDialog = false
-                onConfigurationUpdate(configuration.copy(filterConfiguration = it))
-            }
-        )
-    }
-
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(rememberScrollState())
-            .padding(horizontal = 20.dp)
-    ) {
-
-        FilterChip(
-            selected = true,
-            onClick = {
-                val practiceTypes = ScreenVocabPracticeType.entries
-                val newPracticeTypeOrdinal =
-                    (configuration.practiceType.ordinal + 1) % practiceTypes.size
-                val newPracticeType = practiceTypes[newPracticeTypeOrdinal]
-                onConfigurationUpdate(configuration.copy(practiceType = newPracticeType))
-            },
-            modifier = Modifier.wrapContentSize(Alignment.CenterStart),
-            label = { Text(resolveString(configuration.practiceType.titleResolver)) },
-        )
-
-        SrsFilterChip(
-            filterConfiguration = configuration.filterConfiguration,
-            onClick = { showFilterOptionDialog = true }
-        )
-
-    }
-
 }
 
 

@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import ua.syt0r.kanji.presentation.common.AppDropdownMenu
 import ua.syt0r.kanji.presentation.common.ScreenLetterPracticeType
 import ua.syt0r.kanji.presentation.common.ScreenPracticeType
-import ua.syt0r.kanji.presentation.common.ScreenVocabPracticeType
 import ua.syt0r.kanji.presentation.common.resources.string.resolveString
 import kotlin.math.max
 
@@ -45,7 +44,6 @@ data class DeckDashboardPracticeTypeItem<T : ScreenPracticeType>(
 )
 
 typealias LetterDeckDashboardPracticeTypeItem = DeckDashboardPracticeTypeItem<ScreenLetterPracticeType>
-typealias VocabDeckDashboardPracticeTypeItem = DeckDashboardPracticeTypeItem<ScreenVocabPracticeType>
 
 @Composable
 fun <T : ScreenPracticeType> AnimatedContentScope.DeckDashboardBottomBar(

@@ -16,12 +16,6 @@ interface GetDeckDetailsVisibleDataUseCase {
         currentVisibleData: DeckDetailsVisibleData?
     ): DeckDetailsVisibleData
 
-    operator fun invoke(
-        items: List<DeckDetailsItemData.VocabData>,
-        configuration: DeckDetailsConfiguration.VocabDeckConfiguration,
-        currentVisibleData: DeckDetailsVisibleData?
-    ): DeckDetailsVisibleData.Vocab
-
 }
 
 class DefaultGetDeckDetailsVisibleDataUseCase(
@@ -93,35 +87,6 @@ class DefaultGetDeckDetailsVisibleDataUseCase(
                 )
             }
         }
-    }
-
-    override fun invoke(
-        items: List<DeckDetailsItemData.VocabData>,
-        configuration: DeckDetailsConfiguration.VocabDeckConfiguration,
-        currentVisibleData: DeckDetailsVisibleData?
-    ): DeckDetailsVisibleData.Vocab {
-
-        val selectionStates = currentVisibleData
-            ?.let { it as? DeckDetailsVisibleData.Vocab }
-            ?.items
-            ?.associate { it.key to it.selected.value }
-
-        val filteredItems = applyFilterUseCase(
-            items = items,
-            practiceType = configuration.practiceType,
-            filterConfiguration = configuration.filterConfiguration
-        )
-
-        return DeckDetailsVisibleData.Vocab(
-            items = filteredItems.map { vocabData ->
-                val key = DeckDetailsListItemKey(vocabData.card.cardId.toString())
-                DeckDetailsListItem.Vocab(
-                    key = key,
-                    data = vocabData,
-                    initialSelectionState = selectionStates?.get(key) ?: false
-                )
-            }
-        )
     }
 
 }

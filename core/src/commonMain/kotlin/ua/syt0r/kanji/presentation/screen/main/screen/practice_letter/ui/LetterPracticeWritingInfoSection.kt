@@ -289,6 +289,7 @@ private fun ColumnScope.KanjiDetails(
     KanjiReadingsContainer(
         on = details.on,
         kun = details.kun,
+        hanViet = details.hanViet,
         modifier = Modifier.fillMaxWidth()
     )
 

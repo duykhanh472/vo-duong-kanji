@@ -1,9 +1,6 @@
 package ua.syt0r.kanji.presentation.screen.main.screen.info
 
 import androidx.compose.runtime.State
-import io.ktor.http.URLProtocol
-import io.ktor.http.appendPathSegments
-import io.ktor.http.buildUrl
 import kotlinx.coroutines.CoroutineScope
 
 interface InfoScreenContract {
@@ -14,12 +11,7 @@ interface InfoScreenContract {
         const val ListPrefetchDistance: Int = 50
 
         fun getJishoSearchUrl(searchTerm: String): String {
-            val url = buildUrl {
-                protocol = URLProtocol.HTTPS
-                host = "jisho.org"
-                appendPathSegments("search", searchTerm)
-            }
-            return url.toString()
+            return "https://jisho.org/search/${searchTerm.percentEncode()}"
         }
 
     }
@@ -42,10 +34,6 @@ interface InfoScreenContract {
                 val data: LetterInfoData
             ) : Loaded
 
-            data class Vocab(
-                val data: VocabInfoData
-            ) : Loaded
-
         }
 
     }
@@ -54,11 +42,26 @@ interface InfoScreenContract {
         suspend operator fun invoke(character: String, coroutineScope: CoroutineScope): ScreenState
     }
 
-    interface LoadVocabStateUseCase {
-        suspend operator fun invoke(
-            data: InfoScreenData.Vocab,
-            coroutineScope: CoroutineScope
-        ): ScreenState
-    }
-
 }
+
+private const val UrlHexDigits = "0123456789ABCDEF"
+
+private fun String.percentEncode(): String = buildString {
+    for (byte in encodeToByteArray()) {
+        val value = byte.toInt() and 0xFF
+        val char = value.toChar()
+        val isUnreserved = char in 'a'..'z' ||
+            char in 'A'..'Z' ||
+            char in '0'..'9' ||
+            char == '-' || char == '.' || char == '_' || char == '~'
+
+        if (isUnreserved) {
+            append(char)
+        } else {
+            append('%')
+            append(UrlHexDigits[value shr 4])
+            append(UrlHexDigits[value and 0x0F])
+        }
+    }
+}
+

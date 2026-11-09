@@ -18,15 +18,11 @@ import ua.syt0r.kanji.core.app_data.AppDataDatabaseProvider
 import ua.syt0r.kanji.core.app_data.AndroidAppDataDatabaseProvider
 import ua.syt0r.kanji.core.backup.AndroidBackupArchiveHandler
 import ua.syt0r.kanji.core.backup.BackupArchiveHandler
-import ua.syt0r.kanji.core.file.AndroidPlatformFileHandler
-import ua.syt0r.kanji.core.file.PlatformFileHandler
 import ua.syt0r.kanji.core.logger.LoggerConfiguration
 import ua.syt0r.kanji.core.notification.ReminderNotificationContract
 import ua.syt0r.kanji.core.notification.ReminderNotificationHandleScheduledActionUseCase
 import ua.syt0r.kanji.core.notification.ReminderNotificationManager
 import ua.syt0r.kanji.core.notification.ReminderNotificationScheduler
-import ua.syt0r.kanji.core.sync.AndroidSyncBackupFileProvider
-import ua.syt0r.kanji.core.sync.SyncBackupFileProvider
 import ua.syt0r.kanji.core.theme_manager.ThemeManager
 import ua.syt0r.kanji.core.tts.AndroidKanaTtsManager
 import ua.syt0r.kanji.core.tts.KanaTtsManager
@@ -37,18 +33,13 @@ import ua.syt0r.kanji.core.user_data.preferences.DefaultUserPreferencesMigration
 import ua.syt0r.kanji.presentation.backupScreenComponents
 import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.settings.AndroidReminderSettingListItem
 import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.settings.settingItemsQualifier
+import ua.syt0r.kanji.presentation.screen.setup.appDataSetupComponents
 
 actual val platformComponentsModule: Module = module {
 
     factory { LoggerConfiguration(isEnabled = BuildConfig.DEBUG) }
 
     factory { ExoPlayer.Builder(androidContext()).build() }
-
-    factory<SyncBackupFileProvider> {
-        AndroidSyncBackupFileProvider(
-            context = androidContext()
-        )
-    }
 
     factory<KanaTtsManager> {
         AndroidKanaTtsManager(
@@ -69,12 +60,6 @@ actual val platformComponentsModule: Module = module {
         AndroidUserDataDatabasePlatformHandler(
             context = androidContext(),
             migrationProvider = get()
-        )
-    }
-
-    factory<PlatformFileHandler> {
-        AndroidPlatformFileHandler(
-            contentResolver = androidContext().contentResolver
         )
     }
 
@@ -117,7 +102,6 @@ actual val platformComponentsModule: Module = module {
         ReminderNotificationHandleScheduledActionUseCase(
             activityManager = get(),
             letterSrsManager = get(),
-            vocabSrsManager = get(),
             notificationManager = get(),
             appPreferences = get(),
             scheduler = get(),
@@ -140,5 +124,7 @@ actual val platformComponentsModule: Module = module {
     }
 
     backupScreenComponents()
+
+    appDataSetupComponents()
 
 }

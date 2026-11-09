@@ -44,7 +44,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ua.syt0r.kanji.core.app_data.WordClassification
 import ua.syt0r.kanji.core.japanese.CharacterClassification
 import ua.syt0r.kanji.presentation.common.clickable
 import ua.syt0r.kanji.presentation.common.detectUrlClick
@@ -54,7 +53,6 @@ import ua.syt0r.kanji.presentation.screen.main.screen.deck_picker.DeckPickerScre
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_picker.data.DeckPickerCategory
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_picker.data.DeckPickerDeck
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_picker.data.LetterDeckPickerDeck
-import ua.syt0r.kanji.presentation.screen.main.screen.deck_picker.data.VocabDeckPickerDeck
 
 private val listHeadingButtonTextStyle: TextStyle
     @Composable
@@ -67,7 +65,6 @@ fun DeckPickerScreenUI(
     onUpButtonClick: () -> Unit,
     createEmpty: () -> Unit,
     onLetterDeckClick: (classification: CharacterClassification, title: String) -> Unit,
-    onVocabDeckClick: (classification: WordClassification, title: String) -> Unit,
     onLinkClick: (String) -> Unit
 ) {
 
@@ -101,7 +98,6 @@ fun DeckPickerScreenUI(
                     screenState = screenState,
                     createEmpty = createEmpty,
                     onLetterDeckClick = onLetterDeckClick,
-                    onVocabDeckClick = onVocabDeckClick,
                     onLinkClick = onLinkClick
                 )
             }
@@ -128,7 +124,6 @@ private fun LoadedState(
     screenState: ScreenState.Loaded,
     createEmpty: () -> Unit,
     onLetterDeckClick: (classification: CharacterClassification, title: String) -> Unit,
-    onVocabDeckClick: (classification: WordClassification, title: String) -> Unit,
     onLinkClick: (String) -> Unit
 ) {
 
@@ -210,7 +205,6 @@ private fun LoadedState(
                     CategoryItem(
                         deck = it,
                         onLetterDeckClick = onLetterDeckClick,
-                        onVocabDeckClick = onVocabDeckClick,
                         modifier = Modifier.animateItem()
                     )
                 }
@@ -254,7 +248,6 @@ private fun CategoryHeader(
 private fun CategoryItem(
     deck: DeckPickerDeck,
     onLetterDeckClick: (classification: CharacterClassification, title: String) -> Unit,
-    onVocabDeckClick: (classification: WordClassification, title: String) -> Unit,
     modifier: Modifier
 ) {
 
@@ -283,19 +276,9 @@ private fun CategoryItem(
                 style = MaterialTheme.typography.bodyMedium
             )
         },
-        trailingContent = {
-            if (deck is VocabDeckPickerDeck) {
-                Text(
-                    text = resolveString { deckPicker.vocabDeckItemWordsCountLabel(deck.wordsCount) },
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = MaterialTheme.typography.labelSmall
-                )
-            }
-        },
         modifier = modifier.clip(MaterialTheme.shapes.large).clickable {
             when (deck) {
                 is LetterDeckPickerDeck -> onLetterDeckClick(deck.classification, title)
-                is VocabDeckPickerDeck -> onVocabDeckClick(deck.classification, title)
             }
         }
     )

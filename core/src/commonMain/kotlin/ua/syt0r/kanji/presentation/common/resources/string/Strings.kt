@@ -7,7 +7,6 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.intl.Locale
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
-import ua.syt0r.kanji.presentation.screen.main.screen.feedback.FeedbackScreen
 import kotlin.math.roundToInt
 import kotlin.time.Duration
 
@@ -42,9 +41,6 @@ interface Strings {
 
     val letterPracticeTypeWriting: String
     val letterPracticeTypeReading: String
-    val vocabPracticeTypeFlashcard: String
-    val vocabPracticeTypeReadingPicker: String
-    val vocabPracticeTypeWriting: String
 
     val reviewStateDone: String
     val reviewStateDue: String
@@ -58,19 +54,9 @@ interface Strings {
 
     val dailyLimit: DailyLimitStrings
 
-    val tutorialDialog: TutorialDialogStrings
-    val alternativeDialog: AlternativeDialogStrings
-
     val reminderDialog: ReminderDialogStrings
     val about: AboutStrings
     val backup: BackupStrings
-    val feedback: FeedbackStrings
-    val sponsor: SponsorStrings
-    val account: AccountScreenStrings
-    val sync: SyncScreenStrings
-
-    val syncDialog: SyncDialogStrings
-    val syncSnackbar: SyncSnackbarStrings
 
     val deckPicker: DeckPickerStrings
     val deckDetails: DeckDetailsStrings
@@ -78,149 +64,20 @@ interface Strings {
 
     val commonPractice: CommonPracticeStrings
     val letterPractice: LetterPracticeStrings
-    val vocabPractice: VocabPracticeStrings
 
     val info: InfoScreenStrings
-
-    val urlPickerMessage: String
-    val urlPickerErrorMessage: String
 
     val reminderNotification: ReminderNotificationStrings
 
 }
 
-interface AccountScreenStrings {
-    val title: String
 
-    val loggedOutMessage: String
-    val signInButton: String
 
-    val emailTitle: String
-    val subscriptionTitle: String
-    val subscriptionStatusInactive: String
-    val subscriptionStatusActive: String
-    val subscriptionStatusExpired: String
-    val subscriptionValidUntilTemplate: String
-    val signOutButton: String
 
-    val issueNoConnectionTitle: String
-    val issueNoConnectionMessage: String
-    val issueSessionExpiredTitle: String
-    val issueSessionExpiredMessage: String
-    val issueSubscriptionOutdatedTitle: String
-    val issueSubscriptionOutdatedMessage: String
-    val issueOtherTitle: String
-    val issueOtherMessageFallback: String
-}
-
-interface SyncScreenStrings {
-    val title: String
-
-    val guideTitle: String
-    val guideMessage: String
-    val guideStepAccountTitle: String
-    val guideStepAccountMessage: String
-    val guideStepSubscriptionTitle: String
-    val guideStepSubscriptionMessage: String
-
-    val accountErrorMessage: String
-
-    val statusTitle: String
-    val statusMessageLoading: String
-    val statusMessageDataDiffer: String
-    val statusMessageLocalNewer: String
-    val statusMessageUpToDate: String
-    val statusMessageError: String
-    val statusMessageUploading: String
-    val statusMessageDownloading: String
-    val statusMessageCanceled: String
-
-    val localDataTitle: String
-    val localDataIdTemplate: String
-    val localDataTimestampTemplate: String
-
-    val syncButton: String
-
-    val errorNoConnectionTitle: String
-    val errorNoConnectionMessage: String
-    val errorSessionExpiredTitle: String
-    val errorSessionExpiredMessage: String
-    val errorNoSubscriptionTitle: String
-    val errorNoSubscriptionMessage: String
-    val errorOtherTitle: String
-    val errorOtherMessageFallback: String
-
-}
-
-interface SyncDialogStrings {
-    val title: String
-    val buttonCancel: String
-    val buttonUpload: String
-    val buttonDownload: String
-    val buttonAccount: String
-    val uploadingMessage: String
-    val downloadingMessage: String
-    val conflictRemoteNewerTitle: String
-    val conflictRemoteNewerMessage: String
-    val conflictIncompatibleTitle: String
-    val conflictIncompatibleMessage: String
-    val errorNoNetworkTitle: String
-    val errorNoNetworkMessage: String
-    val errorNoSubscriptionTitle: String
-    val errorNoSubscriptionMessage: String
-    val errorNotAuthenticatedTitle: String
-    val errorNotAuthenticatedMessage: String
-    val errorUnexpectedErrorTitle: String
-    val errorUnexpectedErrorMessage: String
-    val errorUnsupportedDataTitle: String
-    val errorUnsupportedDataMessage: String
-}
-
-interface SyncSnackbarStrings {
-    val errorNoConnection: String
-    val errorNoSubscription: String
-    val errorNotAuthenticated: String
-    val errorDataNotSupported: String
-    val errorMessageTemplate: String
-    val errorMessageNoReason: String
-    val actionButton: String
-}
-
-interface TutorialDialogStrings {
-    val title: String
-    val page1: String
-    val page2Top: String
-    val page2Bottom: String
-    val page3Top: String
-    val page3Bottom: String
-    val page4Top: String
-    val page4Bottom: String
-    val page5: String
-}
-
-interface SponsorStrings {
-    val message: String
-}
-
-interface FeedbackStrings {
-    val title: String
-    val topicTitle: String
-    val topicGeneral: String
-    val topicExpression: (id: Long, screen: FeedbackScreen) -> String
-    val messageLabel: String
-    val messageSupportingText: (messageLength: Int, maxLength: Int) -> String
-        get() = { messageLength, maxLength -> "$messageLength/$maxLength" }
-    val button: String
-    val successMessage: String
-    val errorMessage: (String?) -> String
-}
 
 interface HomeStrings {
-    val screenTitle: String
-
     val generalDashboardTabLabel: String
     val lettersDashboardTabLabel: String
-    val vocabDashboardTabLabel: String
     val statsTabLabel: String
     val searchTabLabel: String
     val settingsTabLabel: String
@@ -269,12 +126,10 @@ interface DailyLimitStrings {
     val enableSwitchTitle: String
     val enableSwitchDescription: String
     val lettersSectionTitle: String
-    val vocabSectionTitle: String
     val combinedLimitSwitchTitle: String
     val combinedLimitSwitchDescription: String
     val newLabel: String
     val dueLabel: String
-    val noteMessage: String
     val button: String
     val changesSavedMessage: String
 }
@@ -290,31 +145,19 @@ interface StatsStrings {
     val reviewsCountTitle: String
     val formattedDuration: (Duration) -> String
     val uniqueLettersReviewed: String
-    val uniqueWordsReviewed: String
 }
 
 interface SearchStrings {
     val inputHint: String
     val charactersTitle: (count: Int) -> String
-    val wordsTitle: (count: Int) -> String
     val radicalsSheetTitle: String
     val radicalsFoundCharacters: String
     val radicalsEmptyFoundCharacters: String
     val radicalSheetRadicalsSectionTitle: String
 }
 
-interface AlternativeDialogStrings {
-    val title: String
-    val readingsTitle: String
-    val meaningsTitle: String
-    val reportButton: String
-    val closeButton: String
-}
 
 interface SettingsStrings {
-    val analyticsTitle: String
-    val analyticsMessage: String
-
     val themeTitle: String
     val themeSystem: String
     val themeLight: String
@@ -325,9 +168,6 @@ interface SettingsStrings {
     val reminderEnabled: String
     val reminderDisabled: String
     val defaultTab: String
-    val feedbackTitle: String
-    val account: String
-    val sync: String
     val backupTitle: String
     val aboutTitle: String
 
@@ -340,7 +180,6 @@ interface ReminderDialogStrings {
     val noPermissionLabel: String
     val noPermissionButton: String
     val enabledLabel: String
-    val timeLabel: String
     val cancelButton: String
     val applyButton: String
 }
@@ -406,23 +245,6 @@ interface DeckPickerStrings {
     val wanikaniDescription: (urlColor: Color) -> AnnotatedString
     val wanikaniItem: (Int) -> String
 
-    val vocabDeckItemWordsCountLabel: (words: Int) -> String
-
-    val vocabOtherTitle: String
-    val vocabOtherDescription: AnnotatedString
-    val vocabDeckTitleTime: String
-    val vocabDeckTitleWeek: String
-    val vocabDeckTitleCommonVerbs: String
-    val vocabDeckTitleColors: String
-    val vocabDeckTitleRegularFood: String
-    val vocabDeckTitleJapaneseFood: String
-    val vocabDeckTitleGrammarTerms: String
-    val vocabDeckTitleAnimals: String
-    val vocabDeckTitleBody: String
-    val vocabDeckTitleCommonPlaces: String
-    val vocabDeckTitleCities: String
-    val vocabDeckTitleTransport: String
-
 }
 
 interface DeckEditStrings {
@@ -434,20 +256,15 @@ interface DeckEditStrings {
     val editingModeSearchTitle: String
     val editingModeRemovalTitle: String
 
-    val editingModeDetailsTitle: String
-    val vocabDetailsEmptyMessage: (inlineIconId: String) -> AnnotatedString
-
     val completeMessage: String
 
     val saveTitle: String
     val saveInputHint: String
     val saveButtonDefault: String
-    val saveButtonCompleted: String
 
     val deleteTitle: String
     val deleteMessage: (deckTitle: String) -> String
     val deleteButtonDefault: String
-    val deleteButtonCompleted: String
 
     val unknownTitle: String
     val unknownMessage: (characters: List<String>) -> String
@@ -481,7 +298,6 @@ interface DeckDetailsStrings {
     val lapses: (Int) -> String
 
     val multiselectTitle: (selectedCount: Int) -> String
-    val multiselectDataNotLoaded: String
     val multiselectNoSelected: String
 
     val filterAllLabel: String
@@ -492,8 +308,6 @@ interface DeckDetailsStrings {
     val filterDialog: FilterDialogStrings
     val sortDialog: SortDialogStrings
     val layoutDialog: PracticePreviewLayoutDialogStrings
-
-    val shareLetterDeckClipboardMessage: String
 
 }
 
@@ -572,7 +386,6 @@ interface LetterPracticeStrings {
 
     val headerWordsMessage: (count: Int) -> String
     val studyFinishedButton: String
-    val noKanjiTranslationsLabel: String
 
     val altStrokeEvaluatorTitle: String
     val altStrokeEvaluatorMessage: String
@@ -583,28 +396,8 @@ interface LetterPracticeStrings {
     val strokeCountTitle: (Int) -> String
 }
 
-interface VocabPracticeStrings {
-    val configurationTitle: (practiceType: String) -> String
-
-    val readingMeaningConfigurationTitle: String
-    val readingMeaningConfigurationMessage: String
-
-    val translationInFrontConfigurationTitle: String
-    val translationInFrontConfigurationMessage: String
-
-    val writingKanaReadingConfigurationTitle: String
-    val writingKanaReadingConfigurationMessage: String
-
-    val detailsButton: String
-
-}
-
 interface InfoScreenStrings {
     val strokesMessage: (count: Int) -> AnnotatedString
-    val clipboardCopyMessage: String
-    val radicalsSectionTitle: (count: Int) -> String
-    val noRadicalsMessage: String
-    val wordsSectionTitle: (count: Int) -> String
     val romajiMessage: (romaji: List<String>) -> String
     val gradeMessage: (grade: Int) -> String
     val jlptMessage: (level: Int) -> String

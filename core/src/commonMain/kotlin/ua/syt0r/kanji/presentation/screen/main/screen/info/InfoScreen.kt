@@ -20,11 +20,6 @@ fun InfoScreen(
             val nextScreenData = InfoScreenData.Letter(it)
             if (screenData != nextScreenData)
                 mainNavigationState.navigate(MainDestination.Info(nextScreenData))
-        },
-        onWordClick = {
-            val nextScreenData = it.toInfoScreenData()
-            if (screenData != nextScreenData)
-                mainNavigationState.navigate(MainDestination.Info(nextScreenData))
         }
     )
 

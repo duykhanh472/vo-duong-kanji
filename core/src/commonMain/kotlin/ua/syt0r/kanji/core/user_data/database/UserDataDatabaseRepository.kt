@@ -28,28 +28,6 @@ interface LetterPracticeRepository : ObservableRepository {
     suspend fun getDeckCharacters(id: Long): List<String>
 }
 
-interface VocabPracticeRepository : ObservableRepository {
-    suspend fun createDeck(title: String, words: List<VocabCardData>)
-    suspend fun mergeDecks(newDeckTitle: String, deckIdToMerge: List<Long>)
-    suspend fun updateDeckPositions(deckIdToPositionMap: Map<Long, Int>)
-    suspend fun deleteDeck(id: Long)
-    suspend fun getDecks(): List<VocabDeck>
-    suspend fun getDecksContainingWord(kanji: String?, kana: String): List<Long>
-
-    suspend fun updateDeck(
-        id: Long,
-        title: String,
-        cardsToAdd: List<VocabCardData>,
-        cardsToUpdate: List<SavedVocabCard>,
-        cardsToRemove: List<Long>
-    )
-
-    suspend fun addCard(deckId: Long, data: VocabCardData)
-    suspend fun deleteCard(id: Long)
-    suspend fun getCardIdList(deckId: Long): List<Long>
-    suspend fun getAllCards(): List<SavedVocabCard>
-}
-
 interface FsrsCardRepository : ObservableRepository {
     suspend fun get(key: SrsCardKey): FsrsCard?
     suspend fun getAll(): Map<SrsCardKey, FsrsCard>
@@ -69,10 +47,4 @@ interface ReviewHistoryRepository {
     suspend fun getReviewHistoryStatsForKeys(
         keys: List<String>
     ): Map<String, ReviewHistoryStatItem>
-}
-
-interface TextAnalysisRepository : ObservableRepository {
-    suspend fun add(data: TextAnalysisData)
-    suspend fun getCount(): Long
-    suspend fun get(offset: Long, limit: Long): List<TextAnalysisData>
 }

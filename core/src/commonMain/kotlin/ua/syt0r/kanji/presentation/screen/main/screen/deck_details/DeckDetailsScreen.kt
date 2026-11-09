@@ -26,30 +26,14 @@ fun DeckDetailsScreen(
         state = viewModel.state.collectAsState(),
         navigateUp = { mainNavigationState.navigateBack() },
         navigateToDeckEdit = {
-            val deckEditConfiguration = when (configuration) {
-                is DeckDetailsScreenConfiguration.LetterDeck -> {
-                    DeckEditScreenConfiguration.LetterDeck.Edit(
-                        title = viewModel.state.value.let { it as ScreenState.Loaded }.title,
-                        letterDeckId = configuration.deckId
-                    )
-                }
-
-                is DeckDetailsScreenConfiguration.VocabDeck -> {
-                    DeckEditScreenConfiguration.VocabDeck.Edit(
-                        title = viewModel.state.value.let { it as ScreenState.Loaded }.title,
-                        vocabDeckId = configuration.deckId
-                    )
-                }
-            }
+            val deckEditConfiguration = DeckEditScreenConfiguration.LetterDeck.Edit(
+                title = viewModel.state.value.let { it as ScreenState.Loaded }.title,
+                letterDeckId = configuration.deckId
+            )
             mainNavigationState.navigate(MainDestination.DeckEdit(deckEditConfiguration))
         },
         navigateToCharacterDetails = {
             val screenData = InfoScreenData.Letter(it)
-            mainNavigationState.navigate(MainDestination.Info(screenData))
-        },
-        navigateToCardDetails = {
-            val screenData = it.data.card.data
-                .run { InfoScreenData.Vocab(dictionaryId, kanjiReading, kanaReading) }
             mainNavigationState.navigate(MainDestination.Info(screenData))
         },
         startGroupReview = { group ->

@@ -10,8 +10,7 @@ open class CleanupLegacyAppAssetsTask : DefaultTask() {
 
         private val legacyPaths = listOf(
             "core/src/commonMain/resources",
-            "core/src/androidMain/assets",
-            "core/src/jvmMain/resources"
+            "core/src/androidMain/assets"
         )
     }
 

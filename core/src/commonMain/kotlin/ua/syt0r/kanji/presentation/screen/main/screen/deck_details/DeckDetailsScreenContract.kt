@@ -44,14 +44,6 @@ interface DeckDetailsScreenContract {
                 val sharableDeckData: String
             ) : Loaded
 
-            data class Vocab(
-                override val title: String,
-                override val items: List<DeckDetailsItemData.VocabData>,
-                override val configuration: MutableState<DeckDetailsConfiguration.VocabDeckConfiguration>,
-                override val isSelectionModeEnabled: MutableState<Boolean>,
-                override val visibleDataState: State<DeckDetailsVisibleData>
-            ) : Loaded
-
         }
 
     }

@@ -30,21 +30,13 @@ val searchScreenModule = module {
         )
     }
 
-    factory<SearchScreenContract.LoadMoreWordsUseCase> {
-        SearchScreenLoadMoreWordsUseCase(
-            appDataRepository = get()
-        )
-    }
-
     multiplatformViewModel<SearchScreenContract.ViewModel> {
         SearchViewModel(
             viewModelScope = it.component1(),
             processInputUseCase = get(),
-            loadMoreWordsUseCase = get(),
             loadRadicalsUseCase = get(),
             searchByRadicalsUseCase = get(),
-            updateEnabledRadicalsUseCase = get(),
-            analyticsManager = get()
+            updateEnabledRadicalsUseCase = get()
         )
     }
 

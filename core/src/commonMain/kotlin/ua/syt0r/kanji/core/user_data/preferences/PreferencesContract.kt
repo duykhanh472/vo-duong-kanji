@@ -50,10 +50,9 @@ interface PreferencesContract {
         val letterDashboardPracticeType: SuspendedProperty<PreferencesLetterPracticeType>
         val letterDashboardSortByTime: SuspendedProperty<Boolean>
 
-        val vocabDashboardPracticeType: SuspendedProperty<PreferencesVocabPracticeType>
-        val vocabDashboardSortByTime: SuspendedProperty<Boolean>
-
         val dailyResetTime: SuspendedProperty<LocalTime>
+
+        val showOnKunReadings: SuspendedProperty<Boolean>
     }
 
     interface PracticePreferences {
@@ -87,8 +86,7 @@ enum class PreferencesLetterSortOption { AddOrder, Frequency, Name, ReviewTime }
 enum class PreferencesDeckDetailsLetterLayout { Character, Groups }
 enum class PreferencesTheme { System, Light, Dark, Amoled }
 enum class PreferencesLetterPracticeWritingInputMode { Stroke, Character }
-enum class PreferencesVocabPracticeType { Flashcard, ReadingPicker, Writing }
-enum class PreferencesDefaultHomeTab { GeneralDashboard, Letters, Vocab }
+enum class PreferencesDefaultHomeTab { GeneralDashboard, Letters }
 
 @Serializable
 data class PreferencesSyncDataInfo(

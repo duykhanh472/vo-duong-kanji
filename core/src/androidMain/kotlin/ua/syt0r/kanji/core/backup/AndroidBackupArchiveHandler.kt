@@ -2,20 +2,19 @@ package ua.syt0r.kanji.core.backup
 
 import android.content.ContentResolver
 import androidx.core.net.toFile
-import io.ktor.utils.io.copyTo
-import io.ktor.utils.io.jvm.javaio.toByteReadChannel
-import io.ktor.utils.io.streams.asByteWriteChannel
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromStream
 import kotlinx.serialization.json.encodeToStream
+import ua.syt0r.kanji.core.file.InputStreamContentSource
 import ua.syt0r.kanji.core.file.PlatformFile
 import java.io.File
 import java.io.InputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
+import kotlin.io.copyTo
 import kotlin.io.inputStream
 import kotlin.use
 
@@ -59,9 +58,9 @@ class AndroidBackupArchiveHandler(
 
         file.withZipEntry(backupInfo.userDatabaseFileName) {
             val backupArchiveData = BackupArchiveData(
-                backupInfo,
-                preferences,
-                toByteReadChannel()
+                backupInfo = backupInfo,
+                preferences = preferences,
+                databaseContent = InputStreamContentSource(this)
             )
             action(backupArchiveData)
         }
@@ -77,10 +76,7 @@ class AndroidBackupArchiveHandler(
 
     private suspend fun ZipOutputStream.writeFile(name: String, file: File) {
         putNextEntry(ZipEntry(name))
-        val readChannel = file.inputStream().toByteReadChannel()
-        val writeChannel = asByteWriteChannel()
-        readChannel.copyTo(writeChannel)
-        writeChannel.flush()
+        file.inputStream().use { it.copyTo(this) }
         closeEntry()
     }
 

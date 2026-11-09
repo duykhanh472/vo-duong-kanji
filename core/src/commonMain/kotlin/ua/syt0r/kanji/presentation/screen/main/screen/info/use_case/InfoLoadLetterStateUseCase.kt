@@ -89,6 +89,7 @@ class InfoLoadLetterStateUseCase(
             meanings = appDataRepository.getMeanings(character),
             on = onReadings,
             kun = kunReadings,
+            hanViet = appDataRepository.getHanViet(character),
             grade = classifications.find { it is CharacterClassification.Grade }
                 ?.let { it as CharacterClassification.Grade }
                 ?.number,

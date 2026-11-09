@@ -5,7 +5,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import ua.syt0r.kanji.core.user_data.preferences.PreferencesDeckDetailsLetterLayout
 import ua.syt0r.kanji.core.user_data.preferences.PreferencesLetterSortOption
 import ua.syt0r.kanji.presentation.common.ScreenLetterPracticeType
-import ua.syt0r.kanji.presentation.common.ScreenVocabPracticeType
 import ua.syt0r.kanji.presentation.common.resources.string.StringResolveScope
 
 
@@ -18,11 +17,6 @@ sealed interface DeckDetailsConfiguration {
         val isDescending: Boolean,
         val layout: DeckDetailsLayout,
         val kanaGroups: Boolean,
-    ) : DeckDetailsConfiguration
-
-    data class VocabDeckConfiguration(
-        val practiceType: ScreenVocabPracticeType,
-        val filterConfiguration: FilterConfiguration
     ) : DeckDetailsConfiguration
 
 }

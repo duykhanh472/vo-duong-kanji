@@ -48,26 +48,6 @@ data class CharacterStudyProgress(
 )
 
 
-data class VocabDeck(
-    val id: Long,
-    val title: String,
-    val position: Int
-)
-
-data class VocabCardData(
-    val kanjiReading: String?,
-    val kanaReading: String,
-    val meaning: String?,
-    val dictionaryId: Long?
-)
-
-data class SavedVocabCard(
-    val cardId: Long,
-    val deckId: Long,
-    val data: VocabCardData
-)
-
-
 data class ReviewHistoryItem(
     val key: String,
     val practiceType: Long,
@@ -89,11 +69,4 @@ class StreakData(
     val start: LocalDate,
     val end: LocalDate,
     val length: Int
-)
-
-data class TextAnalysisData(
-    val text: String,
-    val timestamp: Instant,
-    val translation: String,
-    val annotatedTextJson: String
 )

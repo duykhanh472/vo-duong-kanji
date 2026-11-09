@@ -46,7 +46,6 @@ import ua.syt0r.kanji.save_letters_dialog_title
 import ua.syt0r.kanji.save_word_dialog_button_add
 import ua.syt0r.kanji.save_word_dialog_button_cancel
 import ua.syt0r.kanji.save_word_dialog_completed_state_message
-import ua.syt0r.kanji.save_word_dialog_contains_hint
 import ua.syt0r.kanji.save_word_dialog_create_deck_button
 import ua.syt0r.kanji.save_word_dialog_create_deck_title_hint
 import ua.syt0r.kanji.save_word_dialog_saving_state_message

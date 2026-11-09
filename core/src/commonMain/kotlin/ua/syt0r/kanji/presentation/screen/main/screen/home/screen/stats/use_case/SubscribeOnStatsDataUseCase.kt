@@ -21,7 +21,6 @@ import ua.syt0r.kanji.core.logger.Logger
 import ua.syt0r.kanji.core.refreshableDataFlow
 import ua.syt0r.kanji.core.srs.LetterPracticeType
 import ua.syt0r.kanji.core.srs.LetterSrsManager
-import ua.syt0r.kanji.core.srs.VocabPracticeType
 import ua.syt0r.kanji.core.time.TimeUtils
 import ua.syt0r.kanji.core.user_data.database.ReviewHistoryRepository
 import ua.syt0r.kanji.core.user_data.preferences.PreferencesContract
@@ -160,9 +159,6 @@ class DefaultSubscribeOnStatsDataUseCase(
                 .getTotalPracticeTime(SingleReviewDurationLimit.inWholeMilliseconds),
             uniqueLettersStudied = reviewHistoryRepository
                 .getUniqueReviewItemsCount(LetterPracticeType.srsPracticeTypeValues)
-                .toInt(),
-            uniqueWordsStudied = reviewHistoryRepository
-                .getUniqueReviewItemsCount(VocabPracticeType.srsPracticeTypeValues)
                 .toInt()
         )
     }

@@ -29,7 +29,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ua.syt0r.kanji.core.app_data.data.JapaneseWord
 import ua.syt0r.kanji.core.app_data.data.formattedVocabDefinition
 import ua.syt0r.kanji.core.japanese.KanaReading
 import ua.syt0r.kanji.presentation.common.FuriganaWordHeadline
@@ -42,7 +41,6 @@ import ua.syt0r.kanji.presentation.common.theme.Dimens
 import ua.syt0r.kanji.presentation.common.ui.LocalOrientation
 import ua.syt0r.kanji.presentation.common.ui.Orientation
 import ua.syt0r.kanji.presentation.common.ui.TinyCircularProgressBar
-import ua.syt0r.kanji.presentation.dialog.SaveWordDialog
 import ua.syt0r.kanji.presentation.screen.main.screen.practice_common.FlashcardPracticeAnswerButtonsRow
 import ua.syt0r.kanji.presentation.screen.main.screen.practice_common.PracticeAnswer
 import ua.syt0r.kanji.presentation.screen.main.screen.practice_letter.LetterPracticeScreenContract
@@ -53,17 +51,8 @@ import ua.syt0r.kanji.presentation.screen.main.screen.practice_letter.data.Lette
 fun LetterPracticeReadingUI(
     reviewState: LetterPracticeReviewState.Reading,
     onNextClick: (PracticeAnswer) -> Unit,
-    speakKana: (KanaReading) -> Unit,
-    onWordClick: (JapaneseWord) -> Unit
+    speakKana: (KanaReading) -> Unit
 ) {
-
-    var wordToAddToVocabDeck by remember { mutableStateOf<JapaneseWord?>(null) }
-    wordToAddToVocabDeck?.let {
-        SaveWordDialog(
-            word = it,
-            onDismissRequest = { wordToAddToVocabDeck = null }
-        )
-    }
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -98,9 +87,7 @@ fun LetterPracticeReadingUI(
                 }
                 addWordItems(
                     examples = examples,
-                    revealed = reviewState.revealed,
-                    onWordClick = onWordClick,
-                    addWordToDeck = { wordToAddToVocabDeck = it }
+                    revealed = reviewState.revealed
                 )
             }
         } else {
@@ -124,9 +111,8 @@ fun LetterPracticeReadingUI(
                 ) {
                     addWordItems(
                         examples = examples,
-                        revealed = reviewState.revealed,
-                        onWordClick = onWordClick
-                    ) { wordToAddToVocabDeck = it }
+                        revealed = reviewState.revealed
+                    )
                 }
 
             }
@@ -149,9 +135,7 @@ fun LetterPracticeReadingUI(
 @OptIn(ExperimentalFoundationApi::class)
 private fun LazyListScope.addWordItems(
     examples: PaginateableState<LetterPracticeExampleWord>,
-    revealed: MutableState<Boolean>,
-    onWordClick: (JapaneseWord) -> Unit,
-    addWordToDeck: (JapaneseWord) -> Unit
+    revealed: MutableState<Boolean>
 ) {
 
     stickyHeader {
@@ -169,9 +153,7 @@ private fun LazyListScope.addWordItems(
     itemsIndexed(examples.list) { index, word ->
         JapaneseWordUI(
             index = index,
-            headline = { VocabExampleHeader(word, revealed.value) },
-            onClick = { onWordClick(word.word) }.takeIf { revealed.value },
-            addWordToVocabDeckClick = { addWordToDeck(word.word) }.takeIf { revealed.value }
+            headline = { VocabExampleHeader(word, revealed.value) }
         )
     }
 

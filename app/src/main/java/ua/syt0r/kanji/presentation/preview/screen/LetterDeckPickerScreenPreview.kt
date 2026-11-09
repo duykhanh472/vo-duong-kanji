@@ -30,7 +30,6 @@ private fun ScreenPreview(
             onUpButtonClick = {},
             createEmpty = {},
             onLetterDeckClick = { _, _ -> },
-            onVocabDeckClick = { _, _ -> },
             onLinkClick = {}
         )
     }

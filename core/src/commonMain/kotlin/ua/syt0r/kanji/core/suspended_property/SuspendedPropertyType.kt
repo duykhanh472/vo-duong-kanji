@@ -74,17 +74,24 @@ object StringSuspendedPropertyType : SuspendedPropertyType.Raw<String> {
 
 
 class EnumSuspendedPropertyType<T : Enum<T>>(
-    private val enumValues: Array<T>
+    private val enumValues: Array<T>,
+    private val fallback: T? = null,
 ) : SuspendedPropertyType.Wrapper<T, String> {
 
     override val backingPropertyType = StringSuspendedPropertyType
 
     override fun convertToBacking(value: T): String = value.name
-    override fun convertToExposed(value: String): T = enumValues.first { it.name == value }
+    override fun convertToExposed(value: String): T {
+        return enumValues.firstOrNull { it.name == value }
+            ?: fallback
+            ?: error("No enum value matching '$value' and no fallback configured")
+    }
 
     companion object {
-        inline fun <reified T : Enum<T>> enumSuspendedPropertyType(): EnumSuspendedPropertyType<T> {
-            return EnumSuspendedPropertyType(enumValues<T>())
+        inline fun <reified T : Enum<T>> enumSuspendedPropertyType(
+            fallback: T? = null,
+        ): EnumSuspendedPropertyType<T> {
+            return EnumSuspendedPropertyType(enumValues<T>(), fallback)
         }
     }
 

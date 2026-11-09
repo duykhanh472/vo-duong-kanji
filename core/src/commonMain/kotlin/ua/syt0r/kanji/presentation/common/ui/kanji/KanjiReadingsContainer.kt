@@ -15,27 +15,37 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.FirstBaseline
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.dp
+import org.koin.compose.koinInject
+import ua.syt0r.kanji.core.kanji_readings.KanjiReadingsSettings
 import ua.syt0r.kanji.presentation.common.resources.string.resolveString
 import kotlin.math.max
 
+
+private const val HanVietLabel = "Hán-Việt"
 
 @Composable
 fun KanjiReadingsContainer(
     on: List<String>,
     kun: List<String>,
+    hanViet: List<String> = emptyList(),
     modifier: Modifier = Modifier
 ) {
 
+    val readingsSettings: KanjiReadingsSettings = koinInject()
+
+    val rows = mutableListOf<Pair<String, List<String>>>()
+
+    if (readingsSettings.showOnKunReadings.value) {
+        if (on.isNotEmpty()) rows.add(resolveString { onyomi } to on)
+        if (kun.isNotEmpty()) rows.add(resolveString { kunyomi } to kun)
+    }
+    if (hanViet.isNotEmpty()) rows.add(HanVietLabel to hanViet)
+
     Layout(
         content = {
-            on.takeIf { it.isNotEmpty() }?.also {
-                ReadingsLabel(resolveString { onyomi })
-                ReadingsRow(it)
-            }
-
-            kun.takeIf { it.isNotEmpty() }?.also {
-                ReadingsLabel(resolveString { kunyomi })
-                ReadingsRow(it)
+            rows.forEach { (label, readings) ->
+                ReadingsLabel(label)
+                ReadingsRow(readings)
             }
         },
         modifier = modifier
@@ -47,23 +57,21 @@ fun KanjiReadingsContainer(
         val horizontalSpacingPx = 8.dp.roundToPx()
         val verticalSpacingPx = 4.dp.roundToPx()
 
-        val labelPlaceables = listOfNotNull(
-            measurables.getOrNull(0),
-            measurables.getOrNull(2)
-        ).map {
-            it.measure(constraints.copy(minWidth = 0, minHeight = 0))
-        }
+        val labelPlaceables = measurables
+            .filterIndexed { index, _ -> index % 2 == 0 }
+            .map {
+                it.measure(constraints.copy(minWidth = 0, minHeight = 0))
+            }
 
         val maxLabelWidth = labelPlaceables.maxOf { it.width }
         val readingsWidth = (constraints.maxWidth - maxLabelWidth - horizontalSpacingPx)
             .coerceAtLeast(0)
 
-        val readingRowsPlaceables = listOfNotNull(
-            measurables.getOrNull(1),
-            measurables.getOrNull(3)
-        ).map {
-            it.measure(constraints.copy(maxWidth = readingsWidth, minWidth = 0, minHeight = 0))
-        }
+        val readingRowsPlaceables = measurables
+            .filterIndexed { index, _ -> index % 2 == 1 }
+            .map {
+                it.measure(constraints.copy(maxWidth = readingsWidth, minWidth = 0, minHeight = 0))
+            }
 
         layout(
             width = constraints.maxWidth,

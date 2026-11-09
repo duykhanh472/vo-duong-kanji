@@ -10,9 +10,7 @@ import ua.syt0r.kanji.core.srs.DailyLimitConfiguration
 import ua.syt0r.kanji.core.srs.DailyLimitManager
 import ua.syt0r.kanji.core.srs.LetterPracticeType
 import ua.syt0r.kanji.core.srs.PracticeLimit
-import ua.syt0r.kanji.core.srs.VocabPracticeType
 import ua.syt0r.kanji.presentation.common.ScreenLetterPracticeType
-import ua.syt0r.kanji.presentation.common.ScreenVocabPracticeType
 import ua.syt0r.kanji.presentation.screen.main.screen.daily_limit.DailyLimitScreenContract.ScreenState
 
 class DailyLimitScreenViewModel(
@@ -44,12 +42,6 @@ class DailyLimitScreenViewModel(
                 letterSeparate = ScreenLetterPracticeType.values()
                     .associateWith {
                         configuration.letterSeparatedLimit.getValue(it.dataType).toScreenType()
-                    },
-                isVocabLimitCombined = mutableStateOf(configuration.isVocabLimitCombined),
-                vocabCombined = configuration.vocabCombinedLimit.toScreenType(),
-                vocabSeparate = ScreenVocabPracticeType.values()
-                    .associateWith {
-                        configuration.vocabSeparatedLimit.getValue(it.dataType).toScreenType()
                     }
             )
         }
@@ -89,33 +81,13 @@ class DailyLimitScreenViewModel(
                     }
                 }
 
-                val isVocabLimitCombined: Boolean = isVocabLimitCombined.value
-                val vocabCombinedLimit: PracticeLimit
-                val vocabSeparatedLimit: Map<VocabPracticeType, PracticeLimit>
-
-                when (isVocabLimitCombined) {
-                    true -> {
-                        vocabCombinedLimit = vocabCombined.toManagerType()
-                        vocabSeparatedLimit = configuration.vocabSeparatedLimit
-                    }
-
-                    false -> {
-                        vocabCombinedLimit = configuration.vocabCombinedLimit
-                        vocabSeparatedLimit = loadedState.vocabSeparate
-                            .map { (practiceType, limitItem) ->
-                                practiceType.dataType to limitItem.toManagerType()
-                            }
-                            .toMap()
-                    }
-                }
-
                 DailyLimitConfiguration(
                     isLetterLimitCombined = isLetterLimitCombined,
                     letterCombinedLimit = letterCombinedLimit,
                     letterSeparatedLimit = letterSeparatedLimit,
-                    isVocabLimitCombined = isVocabLimitCombined,
-                    vocabCombinedLimit = vocabCombinedLimit,
-                    vocabSeparatedLimit = vocabSeparatedLimit
+                    isVocabLimitCombined = configuration.isVocabLimitCombined,
+                    vocabCombinedLimit = configuration.vocabCombinedLimit,
+                    vocabSeparatedLimit = configuration.vocabSeparatedLimit
                 )
             }
 

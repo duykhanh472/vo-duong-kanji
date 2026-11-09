@@ -151,6 +151,7 @@ interface LetterPracticeItemData {
         val radicals: List<CharacterRadical>
         val on: List<String>
         val kun: List<String>
+        val hanViet: List<String>
         val meanings: List<String>
         val variants: String?
     }
@@ -186,6 +187,7 @@ interface LetterPracticeItemData {
         override val radicals: List<CharacterRadical>,
         override val on: List<String>,
         override val kun: List<String>,
+        override val hanViet: List<String>,
         override val meanings: List<String>,
         override val variants: String?
     ) : WritingData, KanjiData
@@ -196,6 +198,7 @@ interface LetterPracticeItemData {
         override val radicals: List<CharacterRadical>,
         override val on: List<String>,
         override val kun: List<String>,
+        override val hanViet: List<String>,
         override val meanings: List<String>,
         override val variants: String?
     ) : ReadingData, KanjiData

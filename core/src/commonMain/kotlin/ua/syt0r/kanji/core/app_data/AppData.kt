@@ -13,7 +13,6 @@ import ua.syt0r.kanji.core.app_data.data.ReadingType
 import ua.syt0r.kanji.core.app_data.db.AppDataDatabase
 
 const val AppDataDatabaseVersion: Long = BuildConfig.appDataDatabaseVersion.toLong()
-const val AppDataDatabaseResourceName: String = BuildConfig.appDataAssetName
 
 interface AppDataDatabaseProvider {
     fun provideAsync(): Deferred<AppDataDatabase>
@@ -25,6 +24,7 @@ interface AppDataRepository {
     suspend fun getRadicalsInCharacter(character: String): List<CharacterRadical>
 
     suspend fun getMeanings(kanji: String): List<String>
+    suspend fun getHanViet(kanji: String): List<String>
     suspend fun getReadings(kanji: String): Map<String, ReadingType>
     suspend fun getClassificationsForKanji(kanji: String): List<String>
     suspend fun getKanjiForClassification(classification: String): List<String>

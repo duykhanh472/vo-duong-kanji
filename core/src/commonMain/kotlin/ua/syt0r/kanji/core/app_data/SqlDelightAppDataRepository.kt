@@ -60,6 +60,10 @@ class SqlDelightAppDataRepository(
         getKanjiMeanings(kanji).executeAsList()
     }
 
+    override suspend fun getHanViet(kanji: String): List<String> = lettersQuery {
+        getKanjiHanViet(kanji).executeAsList()
+    }
+
     override suspend fun getReadings(
         kanji: String
     ): Map<String, ReadingType> = lettersQuery {

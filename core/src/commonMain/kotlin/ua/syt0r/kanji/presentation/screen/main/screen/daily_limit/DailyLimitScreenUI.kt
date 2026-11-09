@@ -145,30 +145,6 @@ fun DailyLimitScreenUI(
                 }
 
             }
-
-            CategoryContainer(
-                title = strings.vocabSectionTitle,
-                combinedLimit = screenState.isVocabLimitCombined,
-                containerColor = containerColor
-            ) { selectedCombinedLimit ->
-
-                when {
-                    selectedCombinedLimit -> {
-                        InputColumn(
-                            limitItem = screenState.vocabCombined
-                        )
-                    }
-
-                    else -> {
-                        screenState.vocabSeparate.forEach { (practiceType, limitItem) ->
-                            InputColumn(
-                                title = resolveString(practiceType.titleResolver),
-                                limitItem = limitItem
-                            )
-                        }
-                    }
-                }
-            }
         },
         loadedStateFabContent = {
             ExtendedFloatingActionButton(
@@ -318,14 +294,7 @@ private fun FabContainer(
                 else -> loadedState.letterSeparate.all { (_, item) -> item.isValid() }
             }
 
-            val isVocabInputValid = when {
-                loadedState.isVocabLimitCombined.value -> loadedState.vocabCombined.isValid()
-                else -> loadedState.vocabSeparate.all { (_, item) -> item.isValid() }
-            }
-
-            val isInputValid = isLetterInputValid && isVocabInputValid
-
-            loadedState to isInputValid
+            loadedState to isLetterInputValid
         }
     }
 

@@ -1,8 +1,8 @@
 package ua.syt0r.kanji.core.backup
 
-import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.serialization.json.JsonObject
+import ua.syt0r.kanji.core.file.ContentSource
 import ua.syt0r.kanji.core.file.PlatformFile
 
 interface BackupManager {
@@ -32,7 +32,7 @@ interface BackupArchiveHandler {
 data class BackupArchiveData(
     val backupInfo: BackupInfo,
     val preferences: JsonObject,
-    val databaseReadChannel: ByteReadChannel,
+    val databaseContent: ContentSource,
 )
 
 object BackupArchiveSchema {

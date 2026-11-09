@@ -14,7 +14,6 @@ import kotlinx.datetime.format
 import ua.syt0r.kanji.presentation.common.CommonDateTimeFormat
 import ua.syt0r.kanji.presentation.common.theme.extraColorScheme
 import ua.syt0r.kanji.presentation.common.withClickableUrl
-import ua.syt0r.kanji.presentation.screen.main.screen.feedback.FeedbackScreen
 import kotlin.time.Duration
 
 object EnglishStrings : Strings {
@@ -31,9 +30,6 @@ object EnglishStrings : Strings {
 
     override val letterPracticeTypeWriting: String = "Writing"
     override val letterPracticeTypeReading: String = "Flashcards"
-    override val vocabPracticeTypeFlashcard: String = "Flashcards"
-    override val vocabPracticeTypeReadingPicker: String = "Reading Picker"
-    override val vocabPracticeTypeWriting: String = "Writing"
 
     override val reviewStateDone: String = "Done"
     override val reviewStateDue: String = "Due"
@@ -42,34 +38,23 @@ object EnglishStrings : Strings {
     override val home: HomeStrings = EnglishHomeStrings
     override val commonDashboard = EnglishCommonDashboardStrings
     override val dailyLimit: DailyLimitStrings = EnglishDailyLimitStrings
-    override val tutorialDialog: TutorialDialogStrings = EnglishTutorialDialogStrings
 
     override val stats: StatsStrings = EnglishStatsStrings
     override val search: SearchStrings = EnglishSearchStrings
-    override val alternativeDialog: AlternativeDialogStrings = EnglishAlternativeDialogStrings
 
     override val settings: SettingsStrings = EnglishSettingsStrings
     override val reminderDialog: ReminderDialogStrings = EnglishReminderDialogStrings
     override val about: AboutStrings = EnglishAboutStrings
     override val backup: BackupStrings = EnglishBackupStrings
-    override val feedback: FeedbackStrings = EnglishFeedbackStrings
-    override val sponsor: SponsorStrings = EnglishSponsorStrings
 
-    override val account: AccountScreenStrings = EnglishAccountScreenStrings
-    override val sync: SyncScreenStrings = EnglishSyncScreenStrings
-    override val syncDialog: SyncDialogStrings = EnglishSyncDialogStrings
-    override val syncSnackbar: SyncSnackbarStrings = EnglishSyncSnackbarStrings
 
     override val deckPicker: DeckPickerStrings = EnglishDeckPickerStrings
     override val deckEdit: DeckEditStrings = EnglishDeckEditStrings
     override val deckDetails: DeckDetailsStrings = EnglishDeckDetailsStrings
     override val commonPractice: CommonPracticeStrings = EnglishCommonPracticeStrings
     override val letterPractice: LetterPracticeStrings = EnglishLetterPracticeStrings
-    override val vocabPractice: VocabPracticeStrings = EnglishVocabPracticeStrings
     override val info: InfoScreenStrings = EnglishInfoScreenStrings
 
-    override val urlPickerMessage: String = "Open With"
-    override val urlPickerErrorMessage: String = "Web browser not found"
 
     override val reminderNotification: ReminderNotificationStrings =
         EnglishReminderNotificationStrings
@@ -77,10 +62,8 @@ object EnglishStrings : Strings {
 }
 
 object EnglishHomeStrings : HomeStrings {
-    override val screenTitle: String = "Kanji Dojo"
     override val generalDashboardTabLabel: String = "Home"
     override val lettersDashboardTabLabel: String = "Letters"
-    override val vocabDashboardTabLabel: String = "Vocab"
     override val statsTabLabel: String = "Stats"
     override val searchTabLabel: String = "Search"
     override val settingsTabLabel: String = "Settings"
@@ -144,60 +127,14 @@ object EnglishDailyLimitStrings : DailyLimitStrings {
     override val enableSwitchDescription: String =
         "Limit the number of daily reviews prompted by the app"
     override val lettersSectionTitle: String = "Letters"
-    override val vocabSectionTitle: String = "Vocab"
     override val combinedLimitSwitchTitle: String = "Combined Limit"
     override val combinedLimitSwitchDescription: String = "Share limit across all practice types"
     override val newLabel: String = "New"
     override val dueLabel: String = "Due"
-    override val noteMessage: String =
-        "Note: Writing and reading reviews are counted separately towards the limit"
     override val button: String = "Save"
     override val changesSavedMessage: String = "Done"
 }
 
-object EnglishTutorialDialogStrings : TutorialDialogStrings {
-    override val title: String = "Tutorial"
-
-    override val page1: String = """
-        • The app uses the Spaced Repetition System (SRS) - a highly effective learning method that optimizes the timing of reviews based on how well you remember information
-        • When you do a review the SRS schedules a follow-up review according to your recall ability
-        • If you recall an item easily, the interval between reviews increases. If you struggle, the interval is shortened
-    """.trimIndent()
-
-    override val page2Top: String = """
-        • To estimate your recall ability the app will offer you various rating options after review
-    """.trimIndent()
-
-    override val page2Bottom: String = """
-        • Choose the option that best matches your ability to recall the item you're reviewing
-        • Grading your own answers allows the app to adjust the learning pace according to individual memory capabilities
-    """.trimIndent()
-
-    override val page3Top: String = """
-        • Every day, the status of each reviewed item is updated
-        • The app will let you review several new items and due items that are past their scheduled review time
-    """.trimIndent()
-
-    override val page3Bottom: String = """
-        • You can set a daily limit to control your workload at a comfortable level
-    """.trimIndent()
-
-    override val page4Top: String = """
-        • To start using the app create a deck
-        • Decks are used to organize the items you want to master. There are letter and vocab decks in the app
-    """.trimIndent()
-
-    override val page4Bottom: String = """
-        • You can create your own decks from scratch or select from several pre-made ones
-    """.trimIndent()
-
-    override val page5: String = """
-        • Once any deck is created you can start doing reviews
-        • There are several practice modes available, check them all
-        • Stay consistent - regular practice is key to making steady progress. Don't hesitate to lower your daily limit to avoid burnout
-        • Good luck on your way to mastering Japanese! \(^_^)/
-    """.trimIndent()
-}
 
 private val months = listOf(
     "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
@@ -225,30 +162,19 @@ object EnglishStatsStrings : StatsStrings {
     override val reviewsCountTitle: String = "Reviews"
     override val formattedDuration: (Duration) -> String = { formatDuration(it) }
     override val uniqueLettersReviewed: String = "Unique letters reviewed"
-    override val uniqueWordsReviewed: String = "Unique words reviewed"
 }
 
 object EnglishSearchStrings : SearchStrings {
     override val inputHint: String = "Search for letters or words"
     override val charactersTitle: (count: Int) -> String = { "Letters ($it)" }
-    override val wordsTitle: (count: Int) -> String = { "Words ($it)" }
     override val radicalsSheetTitle: String = "Search by radicals"
     override val radicalsFoundCharacters: String = "Found letters"
     override val radicalsEmptyFoundCharacters: String = "Nothing found"
     override val radicalSheetRadicalsSectionTitle: String = "Radicals"
 }
 
-object EnglishAlternativeDialogStrings : AlternativeDialogStrings {
-    override val title: String = "Alternative expressions"
-    override val readingsTitle: String = "Readings"
-    override val meaningsTitle: String = "Meanings"
-    override val reportButton: String = "Report"
-    override val closeButton: String = "Close"
-}
 
 object EnglishSettingsStrings : SettingsStrings {
-    override val analyticsTitle: String = "Analytics"
-    override val analyticsMessage: String = "Allow sending anonymous app usage data"
     override val themeTitle: String = "Theme"
     override val themeSystem: String = "System"
     override val themeLight: String = "Light"
@@ -258,9 +184,6 @@ object EnglishSettingsStrings : SettingsStrings {
     override val reminderEnabled: String = "Enabled"
     override val reminderDisabled: String = "Disabled"
     override val defaultTab: String = "Default Tab"
-    override val feedbackTitle: String = "Feedback"
-    override val account: String = "Account"
-    override val sync: String = "Sync (Preview)"
     override val backupTitle: String = "Backup & Restore"
     override val aboutTitle: String = "About"
     override val pickerDialogCancel: String = "Cancel"
@@ -272,7 +195,6 @@ object EnglishReminderDialogStrings : ReminderDialogStrings {
     override val noPermissionLabel: String = "Missing notification permission"
     override val noPermissionButton: String = "Grant"
     override val enabledLabel: String = "Enabled"
-    override val timeLabel: String = "Time"
     override val cancelButton: String = "Close"
     override val applyButton: String = "Apply"
 }
@@ -306,36 +228,6 @@ object EnglishBackupStrings : BackupStrings {
     override val completeMessage: String = "Done"
 }
 
-object EnglishFeedbackStrings : FeedbackStrings {
-    override val title: String = "Feedback"
-    override val topicTitle: String = "Topic"
-    override val topicGeneral: String = "General"
-    override val topicExpression: (id: Long, screen: FeedbackScreen) -> String = { id, screen ->
-        val screenName: String = when (screen) {
-            FeedbackScreen.WritingPractice -> "Writing practice"
-            FeedbackScreen.ReadingPractice -> "Reading practice"
-            FeedbackScreen.Search -> "Search"
-            FeedbackScreen.CharacterInfo -> "Letter info"
-            FeedbackScreen.VocabPractice -> "Vocab practice"
-        }
-        "$screenName, expression $id"
-    }
-    override val messageLabel: String = "Enter feedback here"
-    override val button: String = "Send"
-    override val successMessage: String = "Feedback sent"
-    override val errorMessage: (String?) -> String = { "Error: $it" }
-}
-
-object EnglishSponsorStrings : SponsorStrings {
-    override val message: String = """
-        Development of Kanji Dojo started in 2021 by a single person and it remains free for all users who want to learn Japanese
-        
-        If you find the app useful please consider supporting this project financially, every contribution counts
-        
-        Financial support will allow me to focus more on development, bring extra features, add more voiced content and translations
-    """.trimIndent()
-
-}
 
 object EnglishDeckPickerStrings : DeckPickerStrings {
 
@@ -409,26 +301,6 @@ object EnglishDeckPickerStrings : DeckPickerStrings {
     }
     override val wanikaniItem: (Int) -> String = { "WaniKani Level $it" }
 
-    override val vocabOtherTitle: String = "Other"
-    override val vocabOtherDescription: AnnotatedString = buildAnnotatedString {
-        append("A collection of small vocabulary decks covering common topics to help you get started")
-    }
-
-    override val vocabDeckItemWordsCountLabel: (words: Int) -> String = { "$it words" }
-
-    override val vocabDeckTitleTime: String = "Time"
-    override val vocabDeckTitleWeek: String = "Week Days"
-    override val vocabDeckTitleCommonVerbs: String = "Common Verbs"
-    override val vocabDeckTitleColors: String = "Colors"
-    override val vocabDeckTitleRegularFood: String = "Regular Food"
-    override val vocabDeckTitleJapaneseFood: String = "Japanese Food"
-    override val vocabDeckTitleGrammarTerms: String = "Grammar Terms"
-    override val vocabDeckTitleAnimals: String = "Animals"
-    override val vocabDeckTitleBody: String = "Body"
-    override val vocabDeckTitleCommonPlaces: String = "Common Places"
-    override val vocabDeckTitleCities: String = "Cities"
-    override val vocabDeckTitleTransport: String = "Transport"
-
 }
 
 object EnglishDeckEditStrings : DeckEditStrings {
@@ -437,25 +309,15 @@ object EnglishDeckEditStrings : DeckEditStrings {
     override val searchHint: String = "Enter kana or kanji"
     override val editingModeSearchTitle: String = "Search"
     override val editingModeRemovalTitle: String = "Removal"
-    override val editingModeDetailsTitle: String = "Details"
-    override val vocabDetailsEmptyMessage: (inlineIconId: String) -> AnnotatedString = {
-        buildAnnotatedString {
-            append("No cards. To add new cards save this deck and use ")
-            appendInlineContent(it)
-            append(" icon on search screen, during writing reviews and other places in the app")
-        }
-    }
     override val completeMessage: String = "Done"
     override val saveTitle: String = "Save changes"
     override val saveInputHint: String = "Deck Title"
     override val saveButtonDefault: String = "Save"
-    override val saveButtonCompleted: String = "Done"
     override val deleteTitle: String = "Delete confirmation"
     override val deleteMessage: (deckTitle: String) -> String = {
         "Are you sure you want to delete \"$it\" deck?"
     }
     override val deleteButtonDefault: String = "Delete"
-    override val deleteButtonCompleted: String = "Done"
 
     override val unknownTitle: String = "Unknown letters"
     override val unknownMessage: (characters: List<String>) -> String = {
@@ -502,14 +364,11 @@ object EnglishDeckDetailsStrings : DeckDetailsStrings {
         EnglishPracticePreviewLayoutDialogStrings
 
     override val multiselectTitle: (selectedCount: Int) -> String = { "$it Selected" }
-    override val multiselectDataNotLoaded: String = "Loading, wait a moment…"
     override val multiselectNoSelected: String = "Select at least one group"
 
     override val filterAllLabel: String = "All"
     override val filterNoneLabel: String = "None"
     override val kanaGroupsModeActivatedLabel: String = "Kana Groups Mode"
-    override val shareLetterDeckClipboardMessage: String =
-        "Letters from deck were copied to the clipboard"
 
 }
 
@@ -599,7 +458,6 @@ object EnglishLetterPracticeStrings : LetterPracticeStrings {
         "Examples ($it)"
     }
     override val studyFinishedButton: String = "Review"
-    override val noKanjiTranslationsLabel: String = "[No translations]"
 
     override val altStrokeEvaluatorTitle: String = "Strict Stroke Evaluator"
     override val altStrokeEvaluatorMessage: String = "Alternative algorithm for stroke evaluation"
@@ -608,22 +466,6 @@ object EnglishLetterPracticeStrings : LetterPracticeStrings {
     override val variantsHint: String = "Click to reveal"
     override val unicodeTitle: (String) -> String = { "Unicode: $it" }
     override val strokeCountTitle: (count: Int) -> String = { "Stroke count: $it" }
-}
-
-object EnglishVocabPracticeStrings : VocabPracticeStrings {
-    override val configurationTitle: (practiceType: String) -> String = {
-        "Vocab Practice・$it"
-    }
-    override val readingMeaningConfigurationTitle: String = "Always Show Meanings"
-    override val readingMeaningConfigurationMessage: String =
-        "Choose meaning visibility when answer is not selected"
-    override val translationInFrontConfigurationTitle: String = "Translation In Front"
-    override val translationInFrontConfigurationMessage: String =
-        "Show translation instead of word when flashcard is hidden"
-    override val writingKanaReadingConfigurationTitle: String = "Show Kana Readings"
-    override val writingKanaReadingConfigurationMessage: String =
-        "Show kana readings even before answer is entered"
-    override val detailsButton: String = "Details"
 }
 
 fun formattedSrsDuration(
@@ -664,10 +506,6 @@ object EnglishInfoScreenStrings : InfoScreenStrings {
             else append(" strokes")
         }
     }
-    override val clipboardCopyMessage: String = "Copied"
-    override val radicalsSectionTitle: (count: Int) -> String = { "Radicals ($it)" }
-    override val noRadicalsMessage: String = "No radicals"
-    override val wordsSectionTitle: (count: Int) -> String = { "Expressions ($it)" }
     override val romajiMessage: (romaji: List<String>) -> String = {
         "Romaji readings: ${it.joinToString()}"
     }
@@ -702,96 +540,6 @@ object EnglishReminderNotificationStrings : ReminderNotificationStrings {
 }
 
 
-object EnglishAccountScreenStrings : AccountScreenStrings {
-    override val title = "Account"
-    override val loggedOutMessage = "Logged out"
-    override val signInButton = "Sign in"
-    override val signOutButton = "Sign out"
-    override val emailTitle = "E-mail"
-    override val subscriptionTitle = "Subscription"
-    override val subscriptionStatusActive = "Active"
-    override val subscriptionStatusExpired = "Expired"
-    override val subscriptionStatusInactive = "Inactive"
-    override val subscriptionValidUntilTemplate = "Valid until %s"
-    override val issueNoConnectionTitle = "No Connection"
-    override val issueNoConnectionMessage = "Showing cached data"
-    override val issueSessionExpiredTitle = "Session Expired"
-    override val issueSessionExpiredMessage = "Click to sign in again"
-    override val issueSubscriptionOutdatedTitle = "Subscription status outdated"
-    override val issueSubscriptionOutdatedMessage = "Click to refresh"
-    override val issueOtherTitle = "Error"
-    override val issueOtherMessageFallback = "Unknown error"
-}
 
-object EnglishSyncScreenStrings : SyncScreenStrings {
-    override val title = "Sync (Preview)"
-    override val guideTitle: String = "Sync Your Progress Across Devices"
-    override val guideMessage =
-        "Automatically upload your data to the cloud, keep it as a backup and stay in sync across all your devices"
-    override val guideStepAccountTitle = "Create account and sign in"
-    override val guideStepAccountMessage: String = "Go to account"
-    override val guideStepSubscriptionTitle =
-        "Might require a paid subscription in future"
-    override val guideStepSubscriptionMessage: String =
-        "Free during preview until further notice, follow announcements on our Discord server for updates"
-    override val accountErrorMessage: String = "There's an error with your account"
-    override val syncButton = "Sync now"
-    override val statusTitle = "Status"
-    override val statusMessageLoading = "Checking server for updates..."
-    override val statusMessageDataDiffer = "Local and remote data differs"
-    override val statusMessageLocalNewer = "Can upload updated data"
-    override val statusMessageUpToDate = "Up to date with the server"
-    override val statusMessageError = "Error"
-    override val statusMessageUploading = "Uploading"
-    override val statusMessageDownloading = "Downloading"
-    override val statusMessageCanceled = "Canceled, click on sync button to restart"
-    override val localDataTitle = "Local Data"
-    override val localDataIdTemplate = "ID: %s"
-    override val localDataTimestampTemplate = "Timestamp: %s"
 
-    override val errorNoConnectionTitle = "No Connection"
-    override val errorNoConnectionMessage = "Couldn't access the server"
-    override val errorSessionExpiredTitle = "Session Expired"
-    override val errorSessionExpiredMessage = "Click to sign in again"
-    override val errorNoSubscriptionTitle = "Subscription status outdated"
-    override val errorNoSubscriptionMessage = "Update your subscription status on account screen"
-    override val errorOtherTitle = "Error"
-    override val errorOtherMessageFallback = "Unknown error"
-}
 
-object EnglishSyncDialogStrings : SyncDialogStrings {
-    override val title = "Sync"
-    override val buttonCancel = "Cancel"
-    override val buttonUpload = "Upload"
-    override val buttonDownload = "Download"
-    override val buttonAccount = "Account"
-    override val uploadingMessage = "Uploading..."
-    override val downloadingMessage = "Downloading..."
-    override val conflictRemoteNewerTitle = "New Data Found"
-    override val conflictRemoteNewerMessage = "Data on the server is newer than your local copy"
-    override val conflictIncompatibleTitle = "Data Conflict"
-    override val conflictIncompatibleMessage =
-        "Both remote and local data were changed since the last sync, result can't be merged"
-    override val errorNoNetworkTitle = "No Network"
-    override val errorNoNetworkMessage = "Couldn't establish network connection"
-    override val errorNoSubscriptionTitle = "Subscription Expired"
-    override val errorNoSubscriptionMessage =
-        "Your subscription has expired, sync will be disabled, refresh your subscription status on the Account screen"
-    override val errorNotAuthenticatedTitle = "Session Expired"
-    override val errorNotAuthenticatedMessage = "Sign in to your account again to continue"
-    override val errorUnexpectedErrorTitle = "Unexpected Error"
-    override val errorUnexpectedErrorMessage = "Unknown issue"
-    override val errorUnsupportedDataTitle = "Data on the server is unsupported"
-    override val errorUnsupportedDataMessage =
-        "The data on the server was created using the newer version of the application and is not compatible with the currently installed version. Update the app to retrieve your data or upload your local data to the server"
-}
-
-object EnglishSyncSnackbarStrings : SyncSnackbarStrings {
-    override val errorNoConnection = "No Connection"
-    override val errorNoSubscription = "Subscription expired"
-    override val errorNotAuthenticated = "Sign in data expired"
-    override val errorDataNotSupported = "Remote data unsupported"
-    override val errorMessageTemplate = "Sync Error: %s"
-    override val errorMessageNoReason = "Sync Error"
-    override val actionButton = "Details"
-}

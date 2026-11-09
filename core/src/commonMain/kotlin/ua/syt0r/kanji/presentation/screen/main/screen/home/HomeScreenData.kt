@@ -18,7 +18,6 @@ import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.letters_dashbo
 import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.search.SearchScreen
 import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.settings.SettingsScreen
 import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.stats.StatsScreen
-import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.vocab_dashboard.VocabDashboardScreen
 
 enum class HomeScreenTab(
     val analyticsName: String,
@@ -45,18 +44,6 @@ enum class HomeScreenTab(
         titleResolver = { home.lettersDashboardTabLabel },
         content = { LettersDashboardScreen(mainNavigationState = it) }
     ),
-    VocabDashboard(
-        analyticsName = "vocab_dashboard",
-        iconContent = {
-            Text(
-                text = "語",
-                fontSize = 18.textDp,
-                fontWeight = FontWeight.Bold
-            )
-        },
-        titleResolver = { home.vocabDashboardTabLabel },
-        content = { VocabDashboardScreen(mainNavigationState = it) }
-    ),
     Stats(
         analyticsName = "stats",
         iconContent = { Icon(Icons.Default.QueryStats, null) },
@@ -82,18 +69,4 @@ enum class HomeScreenTab(
         val VisibleTabs: List<HomeScreenTab> = entries
     }
 
-}
-
-data class SyncIconState(
-    val loading: Boolean = false,
-    val indicator: SyncIconIndicator = SyncIconIndicator.Disabled
-)
-
-enum class SyncIconIndicator {
-    Disabled,
-    PendingUpload,
-    UpToDate,
-    Canceled,
-    Error,
-    Conflict
 }

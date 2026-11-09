@@ -9,6 +9,19 @@
         android:supportsRtl="true"
         android:theme="@style/KanjiDojoBaseTheme.AppTheme">
 
+        <activity
+            android:name=".presentation.screen.main.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/KanjiDojoBaseTheme.AppTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
     </application>
 
 </manifest>

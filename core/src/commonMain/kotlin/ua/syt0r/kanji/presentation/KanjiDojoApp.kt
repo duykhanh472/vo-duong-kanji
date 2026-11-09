@@ -6,18 +6,21 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import org.koin.compose.koinInject
 import ua.syt0r.kanji.core.theme_manager.ThemeManager
 import ua.syt0r.kanji.presentation.common.theme.AppTheme
 import ua.syt0r.kanji.presentation.common.ui.Orientation
 import ua.syt0r.kanji.presentation.screen.main.MainScreen
-import ua.syt0r.kanji.presentation.screen.main.features.DeepLinkHandler
+import ua.syt0r.kanji.presentation.screen.setup.AppDataSetupContract
 
 @Composable
 fun KanjiDojoApp(
     windowSizeClass: WindowSizeClass,
-    deepLinkHandler: DeepLinkHandler = koinInject(),
     themeManager: ThemeManager = koinInject()
 ) {
 
@@ -35,8 +38,25 @@ fun KanjiDojoApp(
             Box(
                 modifier = Modifier.safeDrawingPadding()
             ) {
-                MainScreen(deepLinkHandler)
+                AppDataAwareContent()
             }
+        }
+    }
+
+}
+
+@Composable
+private fun AppDataAwareContent(
+    setupContent: AppDataSetupContract.Content = koinInject()
+) {
+
+    var appDataReady by rememberSaveable { mutableStateOf(false) }
+
+    if (appDataReady) {
+        MainScreen()
+    } else {
+        setupContent.invoke {
+            appDataReady = true
         }
     }
 

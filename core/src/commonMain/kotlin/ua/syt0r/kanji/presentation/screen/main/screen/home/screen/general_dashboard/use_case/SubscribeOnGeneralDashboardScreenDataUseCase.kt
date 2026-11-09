@@ -29,9 +29,6 @@ import ua.syt0r.kanji.core.srs.LetterPracticeType
 import ua.syt0r.kanji.core.srs.LetterSrsDeck
 import ua.syt0r.kanji.core.srs.LetterSrsManager
 import ua.syt0r.kanji.core.srs.SrsDecksData
-import ua.syt0r.kanji.core.srs.VocabPracticeType
-import ua.syt0r.kanji.core.srs.VocabSrsDeck
-import ua.syt0r.kanji.core.srs.VocabSrsManager
 import ua.syt0r.kanji.core.time.TimeUtils
 import ua.syt0r.kanji.core.user_data.database.ReviewHistoryRepository
 import ua.syt0r.kanji.core.user_data.database.StreakData
@@ -45,7 +42,6 @@ import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.general_dashbo
 import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.general_dashboard.StudyTargetProgress
 import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.general_dashboard.StudyTargetState
 import ua.syt0r.kanji.presentation.screen.main.screen.practice_letter.data.LetterPracticeScreenConfiguration
-import ua.syt0r.kanji.presentation.screen.main.screen.practice_vocab.data.VocabPracticeScreenConfiguration
 import kotlin.time.Duration.Companion.days
 
 interface SubscribeOnGeneralDashboardScreenDataUseCase {
@@ -58,7 +54,6 @@ interface SubscribeOnGeneralDashboardScreenDataUseCase {
 
 class DefaultSubscribeOnGeneralDashboardScreenDataUseCase(
     private val letterSrsManager: LetterSrsManager,
-    private val vocabSrsManager: VocabSrsManager,
     private val preferencesRepository: PreferencesContract.AppPreferences,
     private val reviewHistoryRepository: ReviewHistoryRepository,
     private val timeUtils: TimeUtils
@@ -70,8 +65,7 @@ class DefaultSubscribeOnGeneralDashboardScreenDataUseCase(
     ): Flow<RefreshableData<ScreenState.Loaded>> = refreshableDataProducerFlow(
         dataChangeFlow = mergeSharedFlows(
             coroutineScope,
-            letterSrsManager.dataChangeFlow,
-            vocabSrsManager.dataChangeFlow
+            letterSrsManager.dataChangeFlow
         ),
         lifecycleState = lifecycleState,
         producer = { withContext(Dispatchers.IO) { produceState() } }
@@ -82,10 +76,6 @@ class DefaultSubscribeOnGeneralDashboardScreenDataUseCase(
 
         val deferredLettersDecks = async {
             runWithTimeLog("letterDecksData") { letterSrsManager.getDecks() }
-        }
-
-        val deferredVocabDecks = async {
-            runWithTimeLog("vocabDecksData") { vocabSrsManager.getDecks() }
         }
 
         val deferredStreakData = async {
@@ -108,17 +98,10 @@ class DefaultSubscribeOnGeneralDashboardScreenDataUseCase(
                     StudyTargetState(
                         studyTarget = studyTarget,
                         enabled = enabled,
-                        progress = when (studyTarget.practiceType) {
-                            is LetterPracticeType -> getPracticeTypeProgress(
-                                decksData = deferredLettersDecks.await(),
-                                practiceType = studyTarget.practiceType
-                            )
-
-                            is VocabPracticeType -> getPracticeTypeProgress(
-                                decksData = deferredVocabDecks.await(),
-                                practiceType = studyTarget.practiceType
-                            )
-                        }
+                        progress = getPracticeTypeProgress(
+                            decksData = deferredLettersDecks.await(),
+                            practiceType = studyTarget.practiceType
+                        )
                     )
                 }
             }.awaitAll()
@@ -165,46 +148,6 @@ class DefaultSubscribeOnGeneralDashboardScreenDataUseCase(
         val leftover = decksData.dailyProgress.leftoversByPracticeTypeMap.getValue(practiceType)
 
         fun Pair<String, Long>.mapToCard() = LetterPracticeScreenConfiguration.Card(first, second)
-
-        val resultNew = combinedDailyNew.toList().take(leftover.new).map { it.mapToCard() }
-        val dueCards = combinedDailyDue.toList().take(leftover.due).map { it.mapToCard() }
-        val combinedCards = resultNew.plus(dueCards)
-
-        return StudyTargetProgress.WithDecks(
-            options = StudyTargetPracticeOptions(
-                newCards = resultNew,
-                dueCards = dueCards,
-                combinedCards = combinedCards
-            ),
-            totalProgress = getProgress(decksData.uniqueCardsCount, combinedNotNew.size)
-        )
-    }
-
-    private fun CoroutineScope.getPracticeTypeProgress(
-        decksData: SrsDecksData<VocabSrsDeck, VocabPracticeType>,
-        practiceType: VocabPracticeType
-    ): StudyTargetProgress {
-        if (decksData.decks.isEmpty()) return StudyTargetProgress.NoDecks
-
-        val combinedDailyNew = mutableMapOf<Long, Long>()
-        val combinedDailyDue = mutableMapOf<Long, Long>()
-        val combinedNotNew = mutableSetOf<Long>()
-
-        decksData.decks
-            .map { it.id to it.progressMap.getValue(practiceType) }
-            .forEach { (deckId, srsProgress) ->
-                srsProgress.dailyNew.associateWith { deckId }
-                    .forEach { combinedDailyNew[it.key] = it.value }
-                srsProgress.dailyDue.associateWith { deckId }
-                    .forEach { combinedDailyDue[it.key] = it.value }
-
-                combinedNotNew.addAll(srsProgress.due)
-                combinedNotNew.addAll(srsProgress.done)
-            }
-
-        val leftover = decksData.dailyProgress.leftoversByPracticeTypeMap.getValue(practiceType)
-
-        fun Pair<Long, Long>.mapToCard() = VocabPracticeScreenConfiguration.Card(first, second)
 
         val resultNew = combinedDailyNew.toList().take(leftover.new).map { it.mapToCard() }
         val dueCards = combinedDailyDue.toList().take(leftover.due).map { it.mapToCard() }

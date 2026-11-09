@@ -5,7 +5,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -23,7 +22,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.ModalBottomSheetLayout
@@ -60,22 +58,15 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import ua.syt0r.kanji.core.app_data.data.JapaneseWord
 import ua.syt0r.kanji.presentation.common.CollapsibleContainer
 import ua.syt0r.kanji.presentation.common.CollapsibleContainerState
-import ua.syt0r.kanji.presentation.common.JapaneseWordUI
-import ua.syt0r.kanji.presentation.common.isNearListEnd
 import ua.syt0r.kanji.presentation.common.rememberCollapsibleContainerState
 import ua.syt0r.kanji.presentation.common.resources.string.resolveString
 import ua.syt0r.kanji.presentation.common.trackItemPosition
 import ua.syt0r.kanji.presentation.common.ui.kanji.HighlightedLetter
-import ua.syt0r.kanji.presentation.dialog.SaveWordDialog
-import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.search.SearchScreenContract
 import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.search.SearchScreenContract.ScreenState
 import ua.syt0r.kanji.presentation.screen.main.screen.home.screen.search.data.RadicalSearchState
 
@@ -86,10 +77,7 @@ fun SearchScreenUI(
     onSubmitInput: (String) -> Unit,
     onRadicalsSectionExpanded: () -> Unit,
     onRadicalsSelected: (Set<String>) -> Unit,
-    onCharacterClick: (String) -> Unit,
-    onWordClick: (JapaneseWord) -> Unit,
-    onScrolledToEnd: () -> Unit,
-    onWordFeedback: (JapaneseWord) -> Unit
+    onCharacterClick: (String) -> Unit
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -172,9 +160,7 @@ fun SearchScreenUI(
             ListContent(
                 screenState = state.value,
                 searchContainerState = searchContainerState,
-                onCharacterClick = onCharacterClick,
-                onWordClick = onWordClick,
-                onScrolledToEnd = onScrolledToEnd
+                onCharacterClick = onCharacterClick
             )
 
         }
@@ -248,41 +234,17 @@ private fun InputSection(
 
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ListContent(
     screenState: ScreenState,
     searchContainerState: CollapsibleContainerState,
-    onCharacterClick: (String) -> Unit,
-    onWordClick: (JapaneseWord) -> Unit,
-    onScrolledToEnd: () -> Unit
+    onCharacterClick: (String) -> Unit
 ) {
 
     val listState = rememberLazyListState()
 
-    val canLoadMoreWords = remember(screenState) {
-        derivedStateOf { screenState.words.value.canLoadMore }
-    }
-
-    if (canLoadMoreWords.value) {
-        LaunchedEffect(Unit) {
-            snapshotFlow { listState.layoutInfo }
-                .map { it.isNearListEnd(SearchScreenContract.LoadMoreWordsFromEndThreshold) }
-                .filter { it }
-                .collect { onScrolledToEnd() }
-        }
-    }
-
     val shouldShowScrollUpButton = remember {
         derivedStateOf { listState.firstVisibleItemIndex > 10 }
-    }
-
-    var wordToAddToVocabDeck by remember { mutableStateOf<JapaneseWord?>(null) }
-    wordToAddToVocabDeck?.let {
-        SaveWordDialog(
-            word = it,
-            onDismissRequest = { wordToAddToVocabDeck = null }
-        )
     }
 
     Box {
@@ -321,26 +283,6 @@ private fun ListContent(
                     item { Spacer(modifier = Modifier.width(20.dp)) }
                 }
 
-            }
-
-            val currentWordsState = screenState.words.value
-
-            stickyHeader {
-                SearchHeader(
-                    text = resolveString { search.wordsTitle(currentWordsState.totalCount) }
-                )
-            }
-
-            item { Spacer(Modifier.height(8.dp)) }
-
-            itemsIndexed(currentWordsState.items) { index, word ->
-                JapaneseWordUI(
-                    index = index,
-                    word = word,
-                    onClick = { onWordClick(word) },
-                    onFuriganaClick = onCharacterClick,
-                    addWordToVocabDeckClick = { wordToAddToVocabDeck = word }
-                )
             }
 
             item { Spacer(modifier = Modifier.height(contentBottomPadding.value + 16.dp)) }

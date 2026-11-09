@@ -21,7 +21,10 @@ class DefaultUserPreferencesMigrationManager(
 ) : UserPreferencesMigrationManager {
 
     companion object {
-        val DefaultMigrations: List<DataMigration<Preferences>> = listOf(DailyLimitDataMigration)
+        val DefaultMigrations: List<DataMigration<Preferences>> = listOf(
+            DailyLimitDataMigration,
+            RemovedVocabDefaultHomeTabMigration
+        )
     }
 
     override suspend fun migrate() {
@@ -96,6 +99,26 @@ private object DailyLimitDataMigration : DataMigration<Preferences> {
         legacyKeys.forEach { mutablePreferences.remove(it) }
 
         return mutablePreferences
+    }
+
+    override suspend fun cleanUp() {}
+
+}
+
+private object RemovedVocabDefaultHomeTabMigration : DataMigration<Preferences> {
+
+    private val defaultHomeTabKey = stringPreferencesKey("default_home_tab")
+    private const val RemovedValue = "Vocab"
+    private const val FallbackValue = "Letters"
+
+    override suspend fun shouldMigrate(currentData: Preferences): Boolean {
+        return currentData[defaultHomeTabKey] == RemovedValue
+    }
+
+    override suspend fun migrate(currentData: Preferences): Preferences {
+        return currentData.toMutablePreferences().apply {
+            this[defaultHomeTabKey] = FallbackValue
+        }
     }
 
     override suspend fun cleanUp() {}

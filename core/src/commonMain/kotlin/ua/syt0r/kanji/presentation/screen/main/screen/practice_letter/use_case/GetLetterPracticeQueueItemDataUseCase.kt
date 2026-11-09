@@ -157,6 +157,7 @@ class DefaultGetLetterPracticeQueueItemDataUseCase(
                     kun = readings.filter { it.value == ReadingType.KUN }
                         .keys
                         .toList(),
+                    hanViet = appDataRepository.getHanViet(character),
                     meanings = appDataRepository.getMeanings(character),
                     variants = appDataRepository.getData(character)
                         ?.variantFamily
@@ -194,6 +195,7 @@ class DefaultGetLetterPracticeQueueItemDataUseCase(
                     kun = readings.filter { it.value == ReadingType.KUN }
                         .keys
                         .toList(),
+                    hanViet = appDataRepository.getHanViet(character),
                     meanings = appDataRepository.getMeanings(character),
                     variants = appDataRepository.getData(character)
                         ?.variantFamily

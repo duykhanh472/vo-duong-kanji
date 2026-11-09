@@ -41,16 +41,4 @@ fun Module.applySrsDefinitions() {
     factory<SrsScheduler> { DefaultSrsScheduler(fsrsScheduler = get()) }
     factory<FsrsScheduler> { DefaultFsrsScheduler(Fsrs5()) }
 
-    single<VocabSrsManager> {
-        DefaultVocabSrsManager(
-            practiceRepository = get(),
-            srsCardRepository = get(),
-            dailyLimitManager = get(),
-            timeUtils = get(),
-            appPreferences = get(),
-            reviewHistoryRepository = get(),
-            coroutineScope = CoroutineScope(Dispatchers.IO)
-        )
-    }
-
 }

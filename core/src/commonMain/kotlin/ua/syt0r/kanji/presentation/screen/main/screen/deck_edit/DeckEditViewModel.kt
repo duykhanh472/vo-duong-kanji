@@ -10,29 +10,25 @@ import ua.syt0r.kanji.core.runUnit
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_edit.DeckEditScreenContract.ScreenState
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_edit.use_case.DeleteDeckUseCase
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_edit.use_case.LoadDeckEditLetterDataUseCase
-import ua.syt0r.kanji.presentation.screen.main.screen.deck_edit.use_case.LoadDeckEditVocabDataUseCase
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_edit.use_case.SaveDeckUseCase
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_edit.use_case.SearchResult
 import ua.syt0r.kanji.presentation.screen.main.screen.deck_edit.use_case.SearchValidCharactersUseCase
-import ua.syt0r.kanji.presentation.screen.main.screen.vocab_card.VocabCardEditResult
 
 class DeckEditViewModel(
     private val viewModelScope: CoroutineScope,
     private val loadDeckEditLetterDataUseCase: LoadDeckEditLetterDataUseCase,
-    private val loadDeckEditVocabDataUseCase: LoadDeckEditVocabDataUseCase,
     private val searchValidCharactersUseCase: SearchValidCharactersUseCase,
     private val saveDeckUseCase: SaveDeckUseCase,
     private val deleteDeckUseCase: DeleteDeckUseCase,
     private val analyticsManager: AnalyticsManager
 ) : DeckEditScreenContract.ViewModel {
 
-    private lateinit var configuration: DeckEditScreenConfiguration
+    private lateinit var configuration: DeckEditScreenConfiguration.LetterDeck
 
     private val deckTitle = mutableStateOf("")
     private val wasDeckEdited = mutableStateOf(false)
 
     private lateinit var letterEditingState: MutableLetterDeckEditingState
-    private lateinit var vocabDeckEditingState: MutableVocabDeckEditingState
 
     private val _state = MutableStateFlow<ScreenState>(ScreenState.Loading)
     override val state: StateFlow<ScreenState> = _state
@@ -40,7 +36,7 @@ class DeckEditViewModel(
     override fun initialize(configuration: DeckEditScreenConfiguration) {
         if (this::configuration.isInitialized) return
 
-        this.configuration = configuration
+        this.configuration = configuration as DeckEditScreenConfiguration.LetterDeck
         viewModelScope.launch {
 
             val defaultListItemAction = when (configuration) {
@@ -48,72 +44,29 @@ class DeckEditViewModel(
                 else -> DeckEditItemAction.Add
             }
 
-            when (configuration) {
-                is DeckEditScreenConfiguration.LetterDeck -> {
-                    val letterData = loadDeckEditLetterDataUseCase(configuration)
-                    val searchResult = searchValidCharactersUseCase(letterData.characters)
+            val letterData = loadDeckEditLetterDataUseCase(configuration)
+            val searchResult = searchValidCharactersUseCase(letterData.characters)
 
-                    deckTitle.value = letterData.title ?: ""
+            deckTitle.value = letterData.title ?: ""
 
-                    letterEditingState = MutableLetterDeckEditingState(
-                        title = deckTitle,
-                        confirmExit = wasDeckEdited,
-                        searching = mutableStateOf(false),
-                        listState = mutableStateOf(emptyList()),
-                        lastSearchResult = mutableStateOf(searchResult),
-                    )
+            letterEditingState = MutableLetterDeckEditingState(
+                title = deckTitle,
+                confirmExit = wasDeckEdited,
+                searching = mutableStateOf(false),
+                listState = mutableStateOf(emptyList()),
+                lastSearchResult = mutableStateOf(searchResult),
+            )
 
-                    addSearchLetters(
-                        searchResult = searchResult,
-                        defaultAction = defaultListItemAction
-                    )
+            addSearchLetters(
+                searchResult = searchResult,
+                defaultAction = defaultListItemAction
+            )
 
-                    _state.value = letterEditingState
+            _state.value = letterEditingState
 
-                    reportInvalidImportCharacter(searchResult.unknownCharacters)
-                }
-
-                is DeckEditScreenConfiguration.VocabDeck -> {
-                    val vocabData = loadDeckEditVocabDataUseCase(
-                        configuration = configuration,
-                        defaultListItemAction = defaultListItemAction,
-                        viewModelScope = viewModelScope
-                    )
-                    deckTitle.value = vocabData.title ?: ""
-
-                    vocabDeckEditingState = MutableVocabDeckEditingState(
-                        title = deckTitle,
-                        confirmExit = wasDeckEdited,
-                        list = mutableStateOf(vocabData.items)
-                    )
-                    _state.value = vocabDeckEditingState
-                }
-            }
+            reportInvalidImportCharacter(searchResult.unknownCharacters)
 
         }
-    }
-
-    override fun notifyVocabCardResult(
-        editResult: VocabCardEditResult
-    ) {
-        wasDeckEdited.value = true
-        when (editResult) {
-            is VocabCardEditResult.Existing -> {
-                vocabDeckEditingState.list.value[editResult.index].editResult.value = editResult
-            }
-
-            is VocabCardEditResult.New -> viewModelScope.launch {
-                val list = vocabDeckEditingState.list.value
-                val newItem = VocabDeckEditListItem(
-                    index = list.size,
-                    cardData = editResult.cardData,
-                    savedVocabCard = null,
-                    initialAction = DeckEditItemAction.Add
-                ).also { loadDeckEditVocabDataUseCase.handleMeaningLoading(it, viewModelScope) }
-                vocabDeckEditingState.list.value = list.plus(newItem)
-            }
-        }
-
     }
 
     override fun searchCharacters(input: String) = letterEditingState.runUnit {

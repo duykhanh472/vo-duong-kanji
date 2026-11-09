@@ -43,7 +43,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import ua.syt0r.kanji.core.app_data.data.JapaneseWord
 import ua.syt0r.kanji.core.app_data.data.formattedVocabDefinition
 import ua.syt0r.kanji.core.app_data.data.withEncodedText
 import ua.syt0r.kanji.core.japanese.KanaReading
@@ -73,8 +72,7 @@ fun LetterPracticeWritingUI(
     layoutConfiguration: LetterPracticeLayoutConfiguration.WritingLayoutConfiguration,
     reviewState: LetterPracticeReviewState.Writing,
     onNextClick: (PracticeAnswer) -> Unit,
-    speakKana: (KanaReading) -> Unit,
-    onWordClick: (JapaneseWord) -> Unit
+    speakKana: (KanaReading) -> Unit
 ) {
 
     val reviewState = rememberUpdatedState(reviewState)
@@ -132,7 +130,6 @@ fun LetterPracticeWritingUI(
                     state = wordsBottomSheetState,
                     sheetContentHeight = bottomSheetHeight,
                     hideSheet = hideBottomSheet,
-                    onWordClick = onWordClick
                 )
             },
             modifier = Modifier
@@ -178,8 +175,7 @@ fun LetterPracticeWritingUI(
                         state = wordsBottomSheetState,
                         sheetContentHeight = bottomSheetHeight,
                         hideSheet = hideBottomSheet,
-                        onWordClick = onWordClick
-                    )
+                        )
                 },
                 modifier = Modifier
                     .fillMaxHeight()

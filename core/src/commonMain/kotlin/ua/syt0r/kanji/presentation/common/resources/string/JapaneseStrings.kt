@@ -30,9 +30,6 @@ object JapaneseStrings : Strings {
 
     override val letterPracticeTypeWriting: String = "書く事"
     override val letterPracticeTypeReading: String = "読む事"
-    override val vocabPracticeTypeFlashcard: String = "フラッシュカード"
-    override val vocabPracticeTypeReadingPicker: String = "読み取りピッカー"
-    override val vocabPracticeTypeWriting: String = "書く事"
 
     override val reviewStateDone: String = "完了"
     override val reviewStateDue: String = "復習"
@@ -41,32 +38,21 @@ object JapaneseStrings : Strings {
     override val home: HomeStrings = JapaneseHomeStrings
     override val commonDashboard = JapaneseCommonDashboardStrings
     override val dailyLimit = JapaneseDailyLimitStrings
-    override val tutorialDialog: TutorialDialogStrings = JapaneseTutorialDialogStrings
     override val stats: StatsStrings = JapaneseStatsStrings
     override val search: SearchStrings = JapaneseSearchStrings
-    override val alternativeDialog: AlternativeDialogStrings = JapaneseAlternativeDialogStrings
 
     override val settings: SettingsStrings = JapaneseSettingsStrings
     override val reminderDialog: ReminderDialogStrings = JapaneseReminderDialogStrings
     override val about: AboutStrings = JapaneseAboutStrings
     override val backup: BackupStrings = JapaneseBackupStrings
-    override val feedback: FeedbackStrings = JapaneseFeedbackStrings
-    override val sponsor: SponsorStrings = JapaneseSponsorStrings
-    override val account: AccountScreenStrings = JapaneseAccountScreenStrings
-    override val sync: SyncScreenStrings = JapaneseSyncScreenStrings
-    override val syncDialog: SyncDialogStrings = JapaneseSyncDialogStrings
-    override val syncSnackbar: SyncSnackbarStrings = JapaneseSyncSnackbarStrings
 
     override val deckPicker: DeckPickerStrings = JapaneseDeckPickerStrings
     override val deckEdit: DeckEditStrings = JapaneseDeckEditStrings
     override val deckDetails: DeckDetailsStrings = JapaneseDeckDetailsStrings
     override val commonPractice: CommonPracticeStrings = JapaneseCommonPracticeStrings
     override val letterPractice: LetterPracticeStrings = JapaneseLetterPracticeStrings
-    override val vocabPractice: VocabPracticeStrings = JapaneseVocabPracticeStrings
     override val info: InfoScreenStrings = JapaneseInfoScreenStrings
 
-    override val urlPickerMessage: String = "開く"
-    override val urlPickerErrorMessage: String = "ブラウザーが見つかりません"
 
     override val reminderNotification: ReminderNotificationStrings =
         JapaneseReminderNotificationStrings
@@ -74,10 +60,8 @@ object JapaneseStrings : Strings {
 }
 
 object JapaneseHomeStrings : HomeStrings {
-    override val screenTitle: String = JapaneseStrings.appName
     override val generalDashboardTabLabel: String = "ホーム"
     override val lettersDashboardTabLabel: String = "文字"
-    override val vocabDashboardTabLabel: String = "単語"
     override val statsTabLabel: String = "統計"
     override val searchTabLabel: String = "検索"
     override val settingsTabLabel: String = "設定"
@@ -140,60 +124,15 @@ object JapaneseDailyLimitStrings : DailyLimitStrings {
     override val enableSwitchDescription: String =
         "アプリによって促される毎日の練習の数を制限するには有効にします"
     override val lettersSectionTitle: String = "文字"
-    override val vocabSectionTitle: String = "単語"
     override val combinedLimitSwitchTitle: String = "共通の上限"
     override val combinedLimitSwitchDescription: String = "すべての練習タイプで共通の上限を設定"
     override val newLabel: String = "新しい"
     override val dueLabel: String = "期限"
-    override val noteMessage: String = "注意: 書く練習と読み練習は、制限に別々に加増されます"
     override val button: String = "保存"
     override val changesSavedMessage: String = "完了"
 }
 
 
-object JapaneseTutorialDialogStrings : TutorialDialogStrings {
-    override val title: String = "チュートリアル"
-
-    override val page1: String = """
-        • このアプリは、復習のタイミングを最適化するSRS（間隔反復システム）を使っています
-        • 復習を行うと、SRSがあなたの記憶力に応じて次の復習を予定します
-        • 簡単に思い出せたら、復習の間隔は長くなり、難しかったら短くなります
-    """.trimIndent()
-
-    override val page2Top: String = """
-        • あなたの記憶力を評価するために、復習後にいくつかの評価オプションが表示されます
-    """.trimIndent()
-
-    override val page2Bottom: String = """
-        • 自分の記憶力に最も合ったオプションを選んでください
-        • 自己評価することで、アプリがあなたに合ったペースで学習を調整できます
-    """.trimIndent()
-
-    override val page3Top: String = """
-        • 毎日、復習した項目のステータスが更新されます
-        • アプリは、新しい項目と復習の期限が過ぎた項目を復習させてくれます
-    """.trimIndent()
-
-    override val page3Bottom: String = """
-        • 負担を抑えるために、1日の制限を設定できます
-    """.trimIndent()
-
-    override val page4Top: String = """
-        • アプリを使い始めるには、デッキを作成してください
-        • デッキは、マスターしたい項目を整理するために使用します。アプリには文字デッキと単語デッキがあります
-    """.trimIndent()
-
-    override val page4Bottom: String = """
-        • 自分でデッキを作成するか、いくつかの事前に作られたデッキを選ぶことができます
-    """.trimIndent()
-
-    override val page5: String = """
-        • デッキが作成されたら、復習を始められます
-        • いくつかの練習モードがあるので、全部試してみてください
-        • 一貫性が大切です。毎日少しずつ練習することが進歩の鍵です。無理しないように、1日の制限を下げることも検討してください
-        • 日本語マスターへの道、がんばってください！\(^_^)/ 
-    """.trimIndent()
-}
 
 
 private fun formatDuration(duration: Duration): String = when {
@@ -216,31 +155,20 @@ object JapaneseStatsStrings : StatsStrings {
     override val reviewsCountTitle: String = "練習回数"
     override val formattedDuration: (Duration) -> String = { formatDuration(it) }
     override val uniqueLettersReviewed: String = "練習した異なる文字の数"
-    override val uniqueWordsReviewed: String = "練習した異なる単語の数"
 }
 
 
 object JapaneseSearchStrings : SearchStrings {
     override val inputHint: String = "文字または単語を入力"
     override val charactersTitle: (count: Int) -> String = { "文字 ($it)" }
-    override val wordsTitle: (count: Int) -> String = { "単語 ($it)" }
     override val radicalsSheetTitle: String = "部首で検索"
     override val radicalsFoundCharacters: String = "見つかった文字"
     override val radicalsEmptyFoundCharacters: String = "何も見つかりませんでした"
     override val radicalSheetRadicalsSectionTitle: String = "部首"
 }
 
-object JapaneseAlternativeDialogStrings : AlternativeDialogStrings {
-    override val title: String = "別の単語"
-    override val readingsTitle: String = "読み方"
-    override val meaningsTitle: String = "意味"
-    override val reportButton: String = "報告"
-    override val closeButton: String = "閉じる"
-}
 
 object JapaneseSettingsStrings : SettingsStrings {
-    override val analyticsTitle: String = "分析レポート"
-    override val analyticsMessage: String = "アプリを向上させるために匿名データの送信を許可する"
     override val themeTitle: String = "テーマ"
     override val themeSystem: String = "システムに従う"
     override val themeLight: String = "ライト"
@@ -250,9 +178,6 @@ object JapaneseSettingsStrings : SettingsStrings {
     override val reminderEnabled: String = "有効"
     override val reminderDisabled: String = "無効"
     override val defaultTab: String = "デフォルトのタブ"
-    override val feedbackTitle: String = "フィードバック"
-    override val account: String = "アカウント"
-    override val sync: String = "同期（プレビュー）"
     override val backupTitle: String = "バックアップと復元"
     override val aboutTitle: String = "このアプリについて"
     override val pickerDialogCancel: String = "キャンセル"
@@ -264,7 +189,6 @@ object JapaneseReminderDialogStrings : ReminderDialogStrings {
     override val noPermissionLabel: String = "通知の権限がありません"
     override val noPermissionButton: String = "許可"
     override val enabledLabel: String = "通知"
-    override val timeLabel: String = "時間"
     override val cancelButton: String = "キャンセル"
     override val applyButton: String = "適用"
 }
@@ -298,16 +222,6 @@ object JapaneseBackupStrings : BackupStrings {
     override val completeMessage: String = "完了"
 }
 
-object JapaneseFeedbackStrings : FeedbackStrings by EnglishFeedbackStrings {
-    override val title: String = "フィードバック"
-    override val topicTitle: String = "トピック"
-    override val messageLabel: String = "ここにフィードバックを入力してください"
-    override val button: String = "送信"
-    override val successMessage: String = "フィードバックを送信しました"
-    override val errorMessage: (String?) -> String = { "エラー: $it" }
-}
-
-object JapaneseSponsorStrings : SponsorStrings by EnglishSponsorStrings
 
 object JapaneseDeckPickerStrings : DeckPickerStrings {
 
@@ -383,24 +297,6 @@ object JapaneseDeckPickerStrings : DeckPickerStrings {
     }
     override val wanikaniItem: (Int) -> String = { "WaniKani レベル$it" }
 
-    override val vocabOtherTitle: String = "その他"
-    override val vocabOtherDescription: AnnotatedString =
-        AnnotatedString("よく使うテーマの小さな単語デッキの集まり。言葉を学び始めるのに役立ちます。")
-
-    override val vocabDeckItemWordsCountLabel: (words: Int) -> String = { "${it}語" }
-    override val vocabDeckTitleTime: String = "時間"
-    override val vocabDeckTitleWeek: String = "曜日"
-    override val vocabDeckTitleCommonVerbs: String = "よく使う動詞"
-    override val vocabDeckTitleColors: String = "色"
-    override val vocabDeckTitleRegularFood: String = "普段の食べ物"
-    override val vocabDeckTitleJapaneseFood: String = "日本の食べ物"
-    override val vocabDeckTitleGrammarTerms: String = "文法用語"
-    override val vocabDeckTitleAnimals: String = "動物"
-    override val vocabDeckTitleBody: String = "体"
-    override val vocabDeckTitleCommonPlaces: String = "よく行く場所"
-    override val vocabDeckTitleCities: String = "都市"
-    override val vocabDeckTitleTransport: String = "交通"
-
 }
 
 object JapaneseDeckEditStrings : DeckEditStrings {
@@ -408,26 +304,16 @@ object JapaneseDeckEditStrings : DeckEditStrings {
     override val ediTitle: String = "デッキの編集"
     override val searchHint: String = "文字を入力"
     override val editingModeSearchTitle: String = "検索"
-    override val editingModeDetailsTitle: String = "詳細"
     override val editingModeRemovalTitle: String = "削除"
-    override val vocabDetailsEmptyMessage: (inlineIconId: String) -> AnnotatedString = {
-        buildAnnotatedString {
-            append("カードなし。新しいカードを追加するには、このデッキを保存して、")
-            appendInlineContent(it)
-            append(" アイコンを検索画面や書き取り練習中、アプリ内の他の場所などで使用してください。")
-        }
-    }
     override val completeMessage: String = "完了"
     override val saveTitle: String = "変更の保存"
     override val saveInputHint: String = "名前"
     override val saveButtonDefault: String = "保存"
-    override val saveButtonCompleted: String = "完了"
     override val deleteTitle: String = "削除の確認"
     override val deleteMessage: (practiceTitle: String) -> String = {
         "デッキ「$it」を削除してもよろしいですか？"
     }
     override val deleteButtonDefault: String = "削除"
-    override val deleteButtonCompleted: String = "完了"
     override val unknownTitle: String = "不明な文字"
     override val unknownMessage: (characters: List<String>) -> String = {
         "${it.joinToString()} のデータが見つかりませんでした"
@@ -474,15 +360,12 @@ object JapaneseDeckDetailsStrings : DeckDetailsStrings {
         JapanesePracticePreviewLayoutDialogStrings
 
     override val multiselectTitle: (selectedCount: Int) -> String = { "$it 個選択中" }
-    override val multiselectDataNotLoaded: String = "しばらくお待ちください…"
     override val multiselectNoSelected: String = "少なくとも1つ選んでください"
 
     override val filterAllLabel: String = "すべて"
     override val filterNoneLabel: String = "何も"
     override val kanaGroupsModeActivatedLabel: String = "仮名グループモード"
 
-    override val shareLetterDeckClipboardMessage: String =
-        "デッキからの文字がクリップボードにコピーされました"
 }
 
 object JapaneseLetterDeckDetailDialogCommonStrings : LetterDeckDetailDialogCommonStrings {
@@ -581,26 +464,11 @@ object JapaneseLetterPracticeStrings : LetterPracticeStrings {
     override val altStrokeEvaluatorTitle: String = "代替字画認識"
     override val altStrokeEvaluatorMessage: String =
         "オリジナルの字画認識の代わりに代替のアルゴリズムを使う"
-    override val noKanjiTranslationsLabel: String = "[翻訳なし]"
 
     override val variantsTitle: String = "異体字"
     override val variantsHint: String = "クリックして表示"
     override val unicodeTitle: (String) -> String = EnglishLetterPracticeStrings.unicodeTitle
     override val strokeCountTitle: (count: Int) -> String = { "${it}画" }
-}
-
-object JapaneseVocabPracticeStrings : VocabPracticeStrings {
-    override val configurationTitle: (String) -> String = { "単語練習・$it" }
-    override val readingMeaningConfigurationTitle: String = "常に意味の表示"
-    override val readingMeaningConfigurationMessage: String =
-        "回答が選択されていない場合の意味の表示を選択してください"
-    override val translationInFrontConfigurationTitle: String = "表に翻訳を置く"
-    override val translationInFrontConfigurationMessage: String =
-        "フラッシュカードが隠れているときに単語の代わりに翻訳を表示する"
-    override val writingKanaReadingConfigurationTitle: String = "かなの読み方の表示"
-    override val writingKanaReadingConfigurationMessage: String =
-        "答えを入力する前でもかなの読み方を表示します"
-    override val detailsButton: String = "詳細"
 }
 
 object JapaneseInfoScreenStrings : InfoScreenStrings {
@@ -609,10 +477,6 @@ object JapaneseInfoScreenStrings : InfoScreenStrings {
             withStyle(SpanStyle(fontWeight = FontWeight.Bold)) { append("${it}画") }
         }
     }
-    override val clipboardCopyMessage: String = "コピーしました"
-    override val radicalsSectionTitle: (count: Int) -> String = { "部首 ($it)" }
-    override val noRadicalsMessage: String = "部首なし"
-    override val wordsSectionTitle: (count: Int) -> String = { "単語 ($it)" }
     override val romajiMessage: (romaji: List<String>) -> String = {
         "ローマ字: ${it.joinToString { "「$it」" }}"
     }
@@ -646,97 +510,6 @@ object JapaneseReminderNotificationStrings : ReminderNotificationStrings {
     }
 }
 
-object JapaneseAccountScreenStrings : AccountScreenStrings {
-    override val title = "アカウント"
-    override val loggedOutMessage = "ログインしていません"
-    override val signInButton = "ログイン"
-    override val signOutButton = "ログアウト"
-    override val emailTitle = "メールアドレス"
-    override val subscriptionTitle = "サブスクリプション"
-    override val subscriptionStatusActive = "アクティブ"
-    override val subscriptionStatusExpired = "期限切れ"
-    override val subscriptionStatusInactive = "非アクティブ"
-    override val subscriptionValidUntilTemplate = "有効期限: %s"
-    override val issueNoConnectionTitle = "接続なし"
-    override val issueNoConnectionMessage = "キャッシュされたデータを表示中"
-    override val issueSessionExpiredTitle = "セッションの有効期限が切れました"
-    override val issueSessionExpiredMessage = "再ログインするにはクリックしてください"
-    override val issueSubscriptionOutdatedTitle = "サブスクリプションの状態が古いです"
-    override val issueSubscriptionOutdatedMessage = "更新するにはクリックしてください"
-    override val issueOtherTitle = "エラー"
-    override val issueOtherMessageFallback = "不明なエラー"
-}
 
-object JapaneseSyncScreenStrings : SyncScreenStrings {
-    override val title = "同期（プレビュー）"
-    override val guideTitle: String = "進捗をデバイス間で同期する"
-    override val guideMessage =
-        "データを自動的にクラウドにアップロードし、バックアップとして保存し、すべてのデバイス間で同期を保つ"
-    override val guideStepAccountTitle = "アカウントを作成してログインする"
-    override val guideStepAccountMessage: String = "アカウント画面に移動する"
-    override val guideStepSubscriptionTitle =
-        "サブスクリプションを購入する（プレビュー期間中は無料）"
-    override val guideStepSubscriptionMessage: String =
-        "更新情報はDiscordで確認してください"
-    override val accountErrorMessage: String = "アカウントに問題があります"
-    override val syncButton = "今すぐ同期"
-    override val statusTitle = "ステータス"
-    override val statusMessageLoading = "サーバーの更新を確認中..."
-    override val statusMessageDataDiffer = "ローカルデータとリモートデータが異なります"
-    override val statusMessageLocalNewer = "更新されたデータをアップロードできます"
-    override val statusMessageUpToDate = "サーバーと同期済み"
-    override val statusMessageError = "エラー"
-    override val statusMessageUploading = "アップロード中"
-    override val statusMessageDownloading = "ダウンロード中"
-    override val statusMessageCanceled =
-        "キャンセルされました。再開するには同期ボタンをクリックしてください"
-    override val localDataTitle = "ローカルデータ"
-    override val localDataIdTemplate = "ID: %s"
-    override val localDataTimestampTemplate = "タイムスタンプ: %s"
 
-    override val errorNoConnectionTitle = "接続なし"
-    override val errorNoConnectionMessage = "サーバーにアクセスできませんでした"
-    override val errorSessionExpiredTitle = "セッションの有効期限が切れました"
-    override val errorSessionExpiredMessage = "再ログインするにはクリックしてください"
-    override val errorNoSubscriptionTitle = "サブスクリプションの状態が古いです"
-    override val errorNoSubscriptionMessage = "アカウント画面でサブスクリプションを更新してください"
-    override val errorOtherTitle = "エラー"
-    override val errorOtherMessageFallback = "不明なエラー"
-}
 
-object JapaneseSyncDialogStrings : SyncDialogStrings {
-    override val title = "同期"
-    override val buttonCancel = "キャンセル"
-    override val buttonUpload = "アップロード"
-    override val buttonDownload = "ダウンロード"
-    override val buttonAccount = "アカウント"
-    override val uploadingMessage = "アップロード中..."
-    override val downloadingMessage = "ダウンロード中..."
-    override val conflictRemoteNewerTitle = "新しいデータが見つかりました"
-    override val conflictRemoteNewerMessage = "サーバー上のデータはローカルコピーより新しいです"
-    override val conflictIncompatibleTitle = "データの競合"
-    override val conflictIncompatibleMessage =
-        "リモートとローカルの両方のデータが変更されました。結果をマージできません"
-    override val errorNoNetworkTitle = "ネットワークなし"
-    override val errorNoNetworkMessage = "ネットワーク接続を確立できませんでした"
-    override val errorNoSubscriptionTitle = "サブスクリプションの期限切れ"
-    override val errorNoSubscriptionMessage =
-        "サブスクリプションの期限が切れました。同期は無効になります。アカウント画面でサブスクリプションの状態を更新してください"
-    override val errorNotAuthenticatedTitle = "セッションの有効期限が切れました"
-    override val errorNotAuthenticatedMessage = "アカウントに再ログインしてください"
-    override val errorUnexpectedErrorTitle = "予期しないエラー"
-    override val errorUnexpectedErrorMessage = "不明な問題が発生しました"
-    override val errorUnsupportedDataTitle = "サーバー上のデータはサポートされていません"
-    override val errorUnsupportedDataMessage =
-        "サーバー上のデータはアプリの新しいバージョンで作成されました。現在インストールされているバージョンと互換性がありません。データを取得するにはアプリを更新するか、ローカルデータをサーバーにアップロードしてください"
-}
-
-object JapaneseSyncSnackbarStrings : SyncSnackbarStrings {
-    override val errorNoConnection = "接続なし"
-    override val errorNoSubscription = "サブスクリプションの期限切れ"
-    override val errorNotAuthenticated = "ログインデータの有効期限切れ"
-    override val errorDataNotSupported = "リモートデータがサポートされていません"
-    override val errorMessageTemplate = "同期エラー: %s"
-    override val errorMessageNoReason = "同期エラー"
-    override val actionButton = "詳細"
-}

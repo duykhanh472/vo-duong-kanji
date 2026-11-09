@@ -159,10 +159,10 @@ class AppPreferences(
     )
 
     override val defaultHomeTab: SuspendedProperty<PreferencesDefaultHomeTab> = createProperty(
-        type = enumSuspendedPropertyType(),
+        type = enumSuspendedPropertyType(fallback = PreferencesDefaultHomeTab.Letters),
         key = "default_home_tab",
         affectSync = true,
-        initialValue = { PreferencesDefaultHomeTab.GeneralDashboard }
+        initialValue = { PreferencesDefaultHomeTab.Letters }
     )
 
     override val lastAppVersionWhenChangesDialogShown: SuspendedProperty<String> = createProperty(
@@ -198,24 +198,17 @@ class AppPreferences(
         initialValue = { false }
     )
 
-    override val vocabDashboardPracticeType: SuspendedProperty<PreferencesVocabPracticeType> =
-        createProperty(
-            type = enumSuspendedPropertyType<PreferencesVocabPracticeType>(),
-            key = "vocab_dashboard_practice_type",
-            initialValue = { PreferencesVocabPracticeType.Flashcard }
-        )
-
-    override val vocabDashboardSortByTime: SuspendedProperty<Boolean> = createProperty(
-        type = BooleanSuspendedPropertyType,
-        key = "vocab_dashboard_sort_by_time",
-        initialValue = { false }
-    )
-
     override val dailyResetTime: SuspendedProperty<LocalTime> = createProperty(
         type = LocalTimeSuspendedPropertyType,
         key = "daily_reset_time",
         initialValue = { LocalTime(0, 0) },
         affectSync = true
+    )
+
+    override val showOnKunReadings: SuspendedProperty<Boolean> = createProperty(
+        type = BooleanSuspendedPropertyType,
+        key = "show_on_kun_readings",
+        initialValue = { true }
     )
 
 }

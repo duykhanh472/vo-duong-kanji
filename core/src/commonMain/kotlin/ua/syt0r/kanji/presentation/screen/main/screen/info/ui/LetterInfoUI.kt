@@ -8,13 +8,9 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import ua.syt0r.kanji.core.app_data.data.JapaneseWord
 import ua.syt0r.kanji.presentation.common.ExtraListSpacerState
 import ua.syt0r.kanji.presentation.common.ExtraSpacer
 import ua.syt0r.kanji.presentation.common.PaginationLoadLaunchedEffect
@@ -23,7 +19,6 @@ import ua.syt0r.kanji.presentation.common.trackList
 import ua.syt0r.kanji.presentation.common.ui.LocalOrientation
 import ua.syt0r.kanji.presentation.common.ui.Orientation
 import ua.syt0r.kanji.presentation.common.ui.kanji.KanjiRadicalUI
-import ua.syt0r.kanji.presentation.dialog.SaveWordDialog
 import ua.syt0r.kanji.presentation.screen.main.screen.info.InfoScreenContract
 import ua.syt0r.kanji.presentation.screen.main.screen.info.LetterInfoData
 import ua.syt0r.kanji.presentation.screen.main.screen.info.infoScreenExpandableSection
@@ -35,17 +30,8 @@ fun LetterInfoUI(
     letterData: LetterInfoData,
     listState: LazyListState,
     listSpacerState: ExtraListSpacerState,
-    onFuriganaClick: (String) -> Unit,
-    onWordClick: (JapaneseWord) -> Unit
+    onFuriganaClick: (String) -> Unit
 ) {
-
-    var wordToAddToDeck by remember { mutableStateOf<JapaneseWord?>(null) }
-    wordToAddToDeck?.let {
-        SaveWordDialog(
-            word = it,
-            onDismissRequest = { wordToAddToDeck = null }
-        )
-    }
 
     val vocabExpanded = rememberSaveable { mutableStateOf(true) }
     val sentencesExpanded = rememberSaveable { mutableStateOf(true) }
@@ -116,9 +102,7 @@ fun LetterInfoUI(
             infoScreenExpandableVocabSection(
                 expanded = vocabExpanded,
                 paginateable = vocab,
-                onWordClick = onWordClick,
-                onFuriganaClick = onFuriganaClick,
-                addWordToVocabDeckClick = { wordToAddToDeck = it }
+                onFuriganaClick = onFuriganaClick
             )
 
             infoScreenExpandableSentenceSection(
@@ -157,9 +141,7 @@ fun LetterInfoUI(
                 infoScreenExpandableVocabSection(
                     expanded = vocabExpanded,
                     paginateable = vocab,
-                    onWordClick = onWordClick,
-                    onFuriganaClick = onFuriganaClick,
-                    addWordToVocabDeckClick = { wordToAddToDeck = it }
+                    onFuriganaClick = onFuriganaClick
                 )
 
                 infoScreenExpandableSentenceSection(

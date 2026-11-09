@@ -1,7 +1,0 @@
-Learn & practice writing Japanese characters
-
-Features
-- Study kana (both Hiragana and Katakana) and kanji
-- Practice by following JLPT levels or school grades
-- Create your own list to study, more than 6000 characters in total are available
-- Works offline

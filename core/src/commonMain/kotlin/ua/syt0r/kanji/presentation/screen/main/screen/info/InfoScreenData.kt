@@ -3,8 +3,6 @@ package ua.syt0r.kanji.presentation.screen.main.screen.info
 import androidx.compose.ui.graphics.Path
 import kotlinx.serialization.Serializable
 import ua.syt0r.kanji.core.app_data.Sentence
-import ua.syt0r.kanji.core.app_data.data.DetailedJapaneseWord
-import ua.syt0r.kanji.core.app_data.data.DetailedVocabReading
 import ua.syt0r.kanji.core.app_data.data.JapaneseWord
 import ua.syt0r.kanji.core.japanese.CharacterClassification
 import ua.syt0r.kanji.core.japanese.KanaReading
@@ -19,20 +17,7 @@ sealed interface InfoScreenData {
         val letter: String
     ) : InfoScreenData
 
-    @Serializable
-    data class Vocab(
-        val id: Long?,
-        val kanjiReading: String?,
-        val kanaReading: String?
-    ) : InfoScreenData
-
 }
-
-fun JapaneseWord.toInfoScreenData() = InfoScreenData.Vocab(
-    id = id,
-    kanjiReading = reading.kanjiReading,
-    kanaReading = reading.kanaReading
-)
 
 sealed interface LetterInfoData {
 
@@ -56,6 +41,7 @@ sealed interface LetterInfoData {
         override val strokes: List<Path>,
         val on: List<String>,
         val kun: List<String>,
+        val hanViet: List<String>,
         val meanings: List<String>,
         val grade: Int?,
         val jlptLevel: Int?,
@@ -65,20 +51,5 @@ sealed interface LetterInfoData {
         override val vocab: Paginateable<JapaneseWord>,
         override val sentences: Paginateable<Sentence>
     ) : LetterInfoData
-
-}
-
-data class VocabInfoData(
-    val word: JapaneseWord,
-    val senseList: List<Sense>,
-    val detailedJapaneseWord: DetailedJapaneseWord,
-    val sentences: Paginateable<Sentence>
-) {
-
-    data class Sense(
-        val glossary: String,
-        val otherReadings: List<DetailedVocabReading>,
-        val pos: String?
-    )
 
 }
